@@ -20,6 +20,11 @@ class UsersInfosValues
     private ?User $user = null;
 
 
+    #[ORM\OneToOne(targetEntity: UsersInfosTitles::class, inversedBy: 'usersInfosValues')]
+    #[ORM\JoinColumn(nullable: false)]
+    private UsersInfosTitles $userInfoTitle ;
+
+
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $value;
 
@@ -43,6 +48,11 @@ class UsersInfosValues
         return $this->value;
     }
 
+
+    public function getUserTitleInfo(): UsersInfosTitles
+    {
+        return $this->userInfoTitle;
+    }
 
 
 }

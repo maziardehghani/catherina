@@ -24,8 +24,12 @@ class UsersInfosValues extends \App\Entities\UsersInfosValues implements \Doctri
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
         "\0".parent::class."\0".'id' => [parent::class, 'id', null],
         "\0".parent::class."\0".'user' => [parent::class, 'user', null],
+        "\0".parent::class."\0".'userInfoTitle' => [parent::class, 'userInfoTitle', null],
+        "\0".parent::class."\0".'value' => [parent::class, 'value', null],
         'id' => [parent::class, 'id', null],
         'user' => [parent::class, 'user', null],
+        'userInfoTitle' => [parent::class, 'userInfoTitle', null],
+        'value' => [parent::class, 'value', null],
     ];
 
     public function __isInitialized(): bool
