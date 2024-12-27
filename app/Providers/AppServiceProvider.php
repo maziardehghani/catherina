@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\User;
 use App\Events\FarabourseDataEvent;
 use App\Events\VerificationEvent;
 use App\Listeners\FarabourseDataListener;
@@ -11,7 +12,9 @@ use App\Listeners\VerificationListener;
 use App\Models\FarabourseProject;
 use App\Models\Project;
 use App\Observers\ProjectStatusLogObserver;
+use App\Repositories\User\UserRepository;
 use App\Services\ResponseServices\ResponseService;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
@@ -23,7 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(UserRepository::class, function ($app) {
+            $entityManager = $app->make(EntityManagerInterface::class);
+            return $entityManager->getRepository(User::class);
+        });
     }
 
     /**

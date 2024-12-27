@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Resources\BankListResource;
@@ -14,7 +15,6 @@ use App\Http\Resources\User\LegalUsersResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
-use App\Models\User;
 use App\Repositories\Installment\InstallmentRepository;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Project\ProjectRepository;
@@ -22,6 +22,7 @@ use App\Repositories\Transaction\TransactionRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
 use App\Traits\Exporter;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,19 +36,15 @@ class UserController extends Controller
 {
     use Exporter;
 
-    public object $userRepo;
-    public object $invoiceRepo;
-    public object $installmentRepo;
-    public object $projectRepo;
-    public object $transactionRepo;
 
-    public function __construct()
+    public function __construct(
+
+        public EntityManagerInterface $entityManager,
+        public UserRepository $userRepository,
+
+    )
     {
-        $this->userRepo = new UserRepository();
-        $this->transactionRepo = new TransactionRepository();
-        $this->invoiceRepo = new InvoiceRepository();
-        $this->installmentRepo = new InstallmentRepository();
-        $this->projectRepo = new ProjectRepository();
+
     }
 
     /**
@@ -57,17 +54,15 @@ class UserController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $users = User::search($request->search)
-            ->whereStatus($request->status)
-            ->whereType($request->type)
-            ->whereRegisterAt($request->register_at)
-            ->latest()
-            ->paginate();
+        $pagination = $this->userRepository->paginate($request->page?? 1,5);
 
-
-        return response()->success(UserResource::collection($users), 'اطلاعات با موفقیت دریافت شد');
+        return response()->success([
+            'data' => UserResource::collection($pagination['data']),
+            'total' => $pagination['total'],
+            'current_page' => $pagination['current_page'],
+            'per_page' => $pagination['per_page'],
+        ], 'اطلاعات با موفقیت دریافت شد');
     }
-
     /**
      *
      * @return JsonResponse containing list of users legal

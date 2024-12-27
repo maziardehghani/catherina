@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware([SubstituteBindings::class, 'auth:sanctum', AdminMiddleware::class])
+            Route::middleware([SubstituteBindings::class])
                 ->namespace('Admin')
                 ->prefix('admin')
                 ->name('admin.')
