@@ -21,8 +21,8 @@ class UsersInfosValues
 
 
     #[ORM\OneToOne(targetEntity: UsersInfosTitles::class, inversedBy: 'usersInfosValues')]
-    #[ORM\JoinColumn(nullable: false)]
-    private UsersInfosTitles $userInfoTitle ;
+    #[ORM\JoinColumn(name: 'user_info_title_id', referencedColumnName: 'id', nullable: false)]
+    private UsersInfosTitles $usersInfosTitles ;
 
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -51,7 +51,7 @@ class UsersInfosValues
 
     public function getUserTitleInfo(): UsersInfosTitles
     {
-        return $this->userInfoTitle;
+        return $this->usersInfosTitles;
     }
 
 

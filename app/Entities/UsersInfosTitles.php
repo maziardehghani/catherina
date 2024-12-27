@@ -26,7 +26,7 @@ class UsersInfosTitles
     private ?DateTimeInterface $updatedAt = null;
 
 
-    #[ORM\OneToOne(targetEntity: UsersInfosValues::class, inversedBy: "usersInfosTitles")]
+    #[ORM\OneToOne(targetEntity: UsersInfosValues::class, mappedBy: "usersInfosTitles")]
     private UsersInfosValues $usersInfosValues;
 
 
