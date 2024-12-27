@@ -56,8 +56,8 @@ class User
     private string $password;
 
 
-    #[ORM\Column(type: Types::ENUM, length: 255)]
-    private UserTypes $type;
+    #[ORM\Column(type: Types::ENUM)]
+    private ?UserTypes $type = null;
 
     #[ORM\OneToMany(targetEntity: UsersInfosValues::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $usersInfosValues;
@@ -176,7 +176,7 @@ class User
     }
 
     // Getter and Setter for $type
-    public function getType(): UserTypes
+    public function getType(): ?UserTypes
     {
         return $this->type;
     }

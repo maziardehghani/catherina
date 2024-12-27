@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\User;
-use App\Entities\UsersInfosTitles;
-use App\Entities\UsersInfosValues;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Resources\BankListResource;
@@ -17,7 +15,6 @@ use App\Http\Resources\User\LegalUsersResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
-use App\Models\UserInfoTitle;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
 use App\Traits\Exporter;
@@ -94,7 +91,7 @@ class UserController extends Controller
 
     public function show(User $user): JsonResponse
     {
-        return response()->success(new UserResource($user->load(['status', 'userInfos.UserInfoTitle', 'medias'])));
+        return response()->success(new UserResource($user));
     }
 
     /**

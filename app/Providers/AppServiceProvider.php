@@ -16,8 +16,11 @@ use App\Repositories\User\UserRepository;
 use App\Services\ResponseServices\ResponseService;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use function App\Helpers\getEntityName;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,11 +29,31 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(UserRepository::class, function ($app) {
-            $entityManager = $app->make(EntityManagerInterface::class);
+
+        $entityManager = $this->app->make(EntityManagerInterface::class);
+
+
+        $this->app->bind(UserRepository::class, function () use ($entityManager) {
             return $entityManager->getRepository(User::class);
         });
+
+
+        $metadataFactory = $entityManager->getMetadataFactory();
+        $allMetadata = $metadataFactory->getAllMetadata();
+
+        foreach ($allMetadata as $metadata) {
+            $this->app->bind($metadata->getName(), function () use ($entityManager, $metadata) {
+
+                return $entityManager->find(
+                    $metadata->getName(),
+                    request()->route()->parameter(getEntityName($metadata->getName()))
+                );
+
+            });
+
+        }
     }
+
 
     /**
      * Bootstrap any application services.
@@ -38,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        Response::macro('success', function ($data = null , $message='عملیات با موفقیت انجام شد', $status = 200) {
+        Response::macro('success', function ($data = null, $message = 'عملیات با موفقیت انجام شد', $status = 200) {
             return ResponseService::successResponse($data, $message, $status = 200);
         });
 

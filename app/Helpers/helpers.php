@@ -38,3 +38,9 @@ function calceCollectedPercent ($total, $part)
 }
 
 
+function getEntityName(string $namespace):string
+{
+    return lcfirst(basename(str_replace('\\', '/', $namespace)));
+}
+
+
