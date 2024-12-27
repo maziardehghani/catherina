@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             'family' => $this->getFamily(),
             'email' => $this->geteMail(),
             'mobile' => $this->getMobile(),
+            'userInfo' => $this->getNationalId(),
             'created_at' => CalendarService::getPersianDate($this->getCreatedAt(), 'Y-m-d H:i:s')
         ];
 

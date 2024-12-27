@@ -4,6 +4,7 @@ namespace App\Entities;
 
 
 use App\Repositories\User\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -13,15 +14,6 @@ class User
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'users')]
-    #[ORM\JoinTable(name:'product_user' , joinColumns: [
-        new ORM\joinColumn(name: 'user_id', referencedColumnName: 'id')
-    ],inverseJoinColumns: [
-        new ORM\joinColumn(name: 'product_id', referencedColumnName: 'id')
-    ])]
-    protected $products;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -36,6 +28,10 @@ class User
 
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $createdAt = null;
+
+
+    #[ORM\OneToMany(targetEntity: UsersInfosValues::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $usersInfosValues;
 
 
     public function getId(): ?int
@@ -101,6 +97,19 @@ class User
     {
         $this->createdAt = $createdAt;
         return $this;
+    }
+
+
+
+    public function getUsersInfosValues(): Collection
+    {
+        return $this->usersInfosValues;
+    }
+
+
+    public function getNationalId(): ?string
+    {
+        return $this->usersInfosValues[0]->getValue();
     }
 
 

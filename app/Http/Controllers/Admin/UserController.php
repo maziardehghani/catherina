@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\User;
+use App\Entities\UsersInfosValues;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Resources\BankListResource;
@@ -15,10 +16,6 @@ use App\Http\Resources\User\LegalUsersResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
-use App\Repositories\Installment\InstallmentRepository;
-use App\Repositories\Invoice\InvoiceRepository;
-use App\Repositories\Project\ProjectRepository;
-use App\Repositories\Transaction\TransactionRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
 use App\Traits\Exporter;
