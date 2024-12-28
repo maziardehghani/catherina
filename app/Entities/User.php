@@ -224,6 +224,14 @@ class User
         return $this->usersInfosValues;
     }
 
+    public function addUsersInfosValues(UsersInfosValues $usersInfosValues): void
+    {
+        if (!$this->usersInfosValues->contains($usersInfosValues)) {
+            $this->usersInfosValues->add($usersInfosValues);
+            $usersInfosValues->setUser($this);
+        }
+    }
+
 
     public function getNationalId(): ?string
     {

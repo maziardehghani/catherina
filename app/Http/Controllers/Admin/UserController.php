@@ -108,9 +108,7 @@ class UserController extends Controller
 
             $user = $this->userRepository->store($request);
 
-//            $this->userRepository->storeSejamInfos($request->validated(), $user);
-
-            dd($user);
+            $this->userRepository->storeSejamInfos($request->validated(), $user);
 
         } catch (\Exception $exception) {
 
