@@ -8,8 +8,9 @@ use App\Repositories\User\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Nette\Utils\Type;
+use Illuminate\Support\Facades\Hash;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
@@ -171,7 +172,7 @@ class User
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        $this->password = Hash::make($password);
         return $this;
     }
 
@@ -198,11 +199,12 @@ class User
     {
         return $this->createdAt;
     }
+    #[ORM\PrePersist]
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(): void
     {
-        $this->createdAt = $createdAt;
-        return $this;
+        $this->createdAt = new \DateTime();
+
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
@@ -210,10 +212,11 @@ class User
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): void
     {
-        $this->updatedAt = $updatedAt;
-        return $this;
+        $this->updatedAt = new \DateTime();;
+
     }
 
     public function getUsersInfosValues(): Collection

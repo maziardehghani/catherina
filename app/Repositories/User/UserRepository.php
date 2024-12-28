@@ -55,7 +55,6 @@ class UserRepository extends EntityRepository
         $user->setIsSejami($data['is_sejami']);
         $user->setStatusId($data['status_id']);
         $user->setBio($data['bio']);
-        $user->setCreatedAt(new \DateTime());
         $user->setPassword($data['password']);
 
 
