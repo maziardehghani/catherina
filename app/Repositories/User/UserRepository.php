@@ -2,6 +2,8 @@
 
 namespace App\Repositories\User;
 
+use App\Entities\User;
+use App\Enums\UserTypes;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -39,6 +41,27 @@ class UserRepository extends EntityRepository
             ->setParameter('type', 'legal')
             ->getQuery()
             ->getResult();
+    }
+
+    public function store(object $data): object
+    {
+        $user = new User();
+        $user->setName($data['name']);
+        $user->setFamily($data['family']);
+        $user->setIsPrivateInvestor($data['is_private_investor']);
+        $user->setMobile($data['mobile']);
+        $user->setEmail($data['email']);
+        $user->setType(UserTypes::REAL);
+        $user->setIsSejami($data['is_sejami']);
+        $user->setStatusId($data['status_id']);
+        $user->setBio($data['bio']);
+        $user->setCreatedAt(new \DateTime());
+        $user->setPassword($data['password']);
+
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        return $user;
     }
 
     public function findAllOrderedByName()

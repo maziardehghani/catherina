@@ -60,7 +60,7 @@ class UserRequest extends FormRequest
                 'nullable',
                 Rule::requiredIf($this->type == 'real'),
                 'string',
-                new MelliCodeIdentity(),
+//                new MelliCodeIdentity(),
                 new UniqueUserInfoValue()
             ],
             'register_code' => [
@@ -88,7 +88,7 @@ class UserRequest extends FormRequest
             'manager_national_id' => [
                 'nullable',
                 'string',
-                new MelliCodeIdentity(),
+//                new MelliCodeIdentity(),
                 new UniqueUserInfoValue()
             ],
             'phone_number' => [

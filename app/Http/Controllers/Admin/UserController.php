@@ -64,7 +64,7 @@ class UserController extends Controller
      * @return JsonResponse containing list of users legal
      *
      */
-    public function legalUsers(EntityManagerInterface $entityManager): JsonResponse
+    public function legalUsers(): JsonResponse
     {
         $users = $this->userRepository->getLegalUsers();
 
@@ -105,20 +105,20 @@ class UserController extends Controller
     public function store(UserRequest $request): JsonResponse
     {
         try {
-            DB::beginTransaction();
-            $user = $this->userRepo->store($request);
 
-            $this->userRepo->storeSejamInfos($request->validated(), $user);
+            $user = $this->userRepository->store($request);
 
-            DB::commit();
+//            $this->userRepository->storeSejamInfos($request->validated(), $user);
+
+            dd($user);
 
         } catch (\Exception $exception) {
-            DB::rollBack();
+
             Log::error($exception->getMessage() . ' ' . $exception->getLine());
             return response()->error('ذخیره کاربر با خطا مواجه شد', 500);
         }
 
-        return response()->success($user->getKey(), 'اطلاعات با موفقیت ذخیره شد');
+        return response()->success($user->getId(), 'اطلاعات با موفقیت ذخیره شد');
     }
 
     /**
