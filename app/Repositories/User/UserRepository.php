@@ -31,6 +31,16 @@ class UserRepository extends EntityRepository
         ];
     }
 
+
+    public function getLegalUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.type = :type')
+            ->setParameter('type', 'legal')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllOrderedByName()
     {
         return $this->createQueryBuilder('u')

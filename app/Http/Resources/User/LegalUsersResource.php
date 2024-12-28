@@ -15,8 +15,8 @@ class LegalUsersResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
-            'company_name'=> $this->companyName
+            'id'=>$this->getId(),
+            'company_name'=> $this->getCompanyName()
         ];
     }
 }

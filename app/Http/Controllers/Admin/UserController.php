@@ -64,9 +64,9 @@ class UserController extends Controller
      * @return JsonResponse containing list of users legal
      *
      */
-    public function legalUsers(): JsonResponse
+    public function legalUsers(EntityManagerInterface $entityManager): JsonResponse
     {
-        $users = $this->userRepo->getLegalUsers();
+        $users = $this->userRepository->getLegalUsers();
 
         return response()->success(LegalUsersResource::collection($users));
     }
