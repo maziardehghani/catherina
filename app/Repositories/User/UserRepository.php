@@ -66,6 +66,27 @@ class UserRepository extends EntityRepository
     }
 
 
+    public function update(User $user , object $data): object
+    {
+
+        $user->setName($data['name']);
+        $user->setFamily($data['family']);
+        $user->setIsPrivateInvestor($data['is_private_investor']);
+        $user->setMobile($data['mobile']);
+        $user->setEmail($data['email']);
+        $user->setType(UserTypes::REAL);
+        $user->setIsSejami($data['is_sejami']);
+        $user->setStatusId($data['status_id']);
+        $user->setBio($data['bio']);
+        $user->setPassword($data['password']);
+
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        return $user;
+    }
+
+
     public function storeSejamInfos(array $datas, User $user)
     {
         $entityManager = $this->getEntityManager();

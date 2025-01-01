@@ -143,13 +143,13 @@ class UserRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                Rule::unique(User::class, 'email')->ignore($this->user?->id),
+                Rule::unique(User::class, 'email')->ignore($this->user?->getId()),
             ],
 
             'mobile' => [
                 'required',
                 'string',
-                Rule::unique(User::class, 'mobile')->ignore($this->user?->id),
+                Rule::unique(User::class, 'mobile')->ignore($this->user?->getId()),
                 new ValidMobileRule()
             ],
             'status_id' => [

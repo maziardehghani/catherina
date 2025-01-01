@@ -42,15 +42,9 @@ class AppServiceProvider extends ServiceProvider
         $allMetadata = $metadataFactory->getAllMetadata();
 
         foreach ($allMetadata as $metadata) {
-            $this->app->bind($metadata->getName(), function () use ($entityManager, $metadata) {
-
-                return $entityManager->find(
-                    $metadata->getName(),
-                    request()->route()->parameter(getEntityName($metadata->getName()))
-                );
-
+            Route::bind(getEntityName($metadata->getName()), function ($value) use ($entityManager, $metadata) {
+                return $entityManager->getRepository($metadata->getName())->find($value);
             });
-
         }
     }
 

@@ -131,11 +131,12 @@ class UserController extends Controller
      */
     public function update(User $user, UserRequest $request): JsonResponse
     {
+        dd($user);
         try {
             DB::beginTransaction();
-            $this->userRepo->update($user, $request);
+            $this->userRepository->update($user, $request);
 
-            $this->userRepo->storeSejamInfos($request->validated(), $user);
+            $this->userRepository->storeSejamInfos($request->validated(), $user);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
