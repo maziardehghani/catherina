@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Media;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FileRequest;
-use App\Models\Media;
 use App\Services\MediaServices\MediaService;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FileController extends Controller
@@ -62,7 +61,6 @@ class FileController extends Controller
     public function delete(Media $media):JsonResponse
     {
         MediaService::delete($media);
-        $media->delete();
 
         return response()->success(null, 'فایل با موفقیت حذف شد');
     }

@@ -66,14 +66,27 @@ class MediaService
 
     public static function delete($medias)
     {
-        foreach ($medias as $media) {
-            File::exists(public_path($media->getUrl()));
+        $em = app(EntityManagerInterface::class);
 
-            File::delete(public_path($media->getUrl()));
-            $em = app(EntityManagerInterface::class);
-            $em->remove($media);
-            $em->flush();
+        if (is_array($medias)) {
+
+            foreach ($medias as $media) {
+
+                File::delete(public_path($media->getUrl()));
+
+                $em->remove($media);
+                $em->flush();
+
+            }
+            return null;
         }
+
+        File::delete(public_path($medias->getUrl()));
+
+        $em->remove($medias);
+        $em->flush();
+
+
     }
 
     public static function replace($file, string $type, $model, $id)
@@ -81,6 +94,7 @@ class MediaService
         $medias = app(EntityManagerInterface::class)
                 ->getRepository(Media::class)
                 ->getMedias($id, self::getClass($model), $type);
+
 
 
         if (!empty($medias)) {

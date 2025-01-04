@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 
-#[Table(name: 'media')]
+#[Table(name: 'medias')]
 #[Entity(repositoryClass: MediaRepository::class)]
 class Media
 {
