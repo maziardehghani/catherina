@@ -147,6 +147,25 @@ class UserRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function deleteInfos(User $user): void
+    {
+        $userInfoValue = $user->getUsersInfosValues();
+        $entityManager = $this->getEntityManager();
+
+        foreach ($userInfoValue as $userInfoValueItem) {
+            $entityManager->remove($userInfoValueItem);
+        }
+
+        $entityManager->flush();
+
+    }
+    public function delete(User $user): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+    }
 }
 
 
@@ -168,10 +187,7 @@ class UserRepository extends EntityRepository
 //
 //}
 //
-//public function deleteSejamInfos($user): void
-//{
-//    $user->userInfos()->delete();
-//}
+
 //
 //
 //private function storeUserValues($user, $userInfoTitle, $item): void

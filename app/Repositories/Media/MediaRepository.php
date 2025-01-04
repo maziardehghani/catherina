@@ -3,6 +3,7 @@
 namespace App\Repositories\Media;
 
 
+use App\Entities\User;
 use Doctrine\ORM\EntityRepository;
 
 class MediaRepository extends EntityRepository
@@ -18,6 +19,18 @@ class MediaRepository extends EntityRepository
             ->setParameter('type', $type)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getMediasOfUser(User $user)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.mediableId = :id')
+            ->andWhere('m.mediableType = :type')
+            ->setParameter('type' , $user::class)
+            ->setParameter('id' , $user->getId())
+            ->getQuery()
+            ->getResult();
+
     }
 }
 

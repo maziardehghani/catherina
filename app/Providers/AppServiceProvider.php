@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Media;
 use App\Entities\User;
 use App\Events\FarabourseDataEvent;
 use App\Events\VerificationEvent;
@@ -12,6 +13,7 @@ use App\Listeners\VerificationListener;
 use App\Models\FarabourseProject;
 use App\Models\Project;
 use App\Observers\ProjectStatusLogObserver;
+use App\Repositories\Media\MediaRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\ResponseServices\ResponseService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,10 +34,11 @@ class AppServiceProvider extends ServiceProvider
 
         $entityManager = $this->app->make(EntityManagerInterface::class);
 
-
-        $this->app->bind(UserRepository::class, function () use ($entityManager) {
-            return $entityManager->getRepository(User::class);
-        });
+        foreach (config('repository.binders') as $concrete => $bind) {
+            $this->app->bind($concrete, function () use ($bind, $entityManager) {
+                return $entityManager->getRepository($bind);
+            });
+        }
 
 
         $metadataFactory = $entityManager->getMetadataFactory();
@@ -43,7 +46,8 @@ class AppServiceProvider extends ServiceProvider
 
         foreach ($allMetadata as $metadata) {
             Route::bind(getEntityName($metadata->getName()), function ($value) use ($entityManager, $metadata) {
-                return $entityManager->getRepository($metadata->getName())->find($value);
+                return $entityManager->getRepository($metadata->getName())->find($value)
+                    ?? abort(404,'model not found');
             });
         }
     }

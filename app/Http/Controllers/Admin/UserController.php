@@ -15,6 +15,7 @@ use App\Http\Resources\User\LegalUsersResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
+use App\Repositories\Media\MediaRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
 use App\Traits\Exporter;
@@ -37,6 +38,7 @@ class UserController extends Controller
 
         public EntityManagerInterface $entityManager,
         public UserRepository $userRepository,
+        public MediaRepository $mediaRepository,
 
     )
     {
@@ -131,7 +133,6 @@ class UserController extends Controller
      */
     public function update(User $user, UserRequest $request): JsonResponse
     {
-        dd($user);
         try {
             DB::beginTransaction();
             $this->userRepository->update($user, $request);
@@ -157,9 +158,14 @@ class UserController extends Controller
      */
     public function delete(User $user): JsonResponse
     {
-        MediaService::delete($user->medias);
-        $this->userRepo->deleteSejamInfos($user);
-        $this->userRepo->delete($user);
+
+        MediaService::delete(
+            $this->mediaRepository->getMediasOfUser($user)
+        );
+
+        $this->userRepository->deleteInfos($user);
+        $this->userRepository->delete($user);
+
         return response()->success('اطلاعات کاربر با موفقیت حذف شد');
     }
 
