@@ -2,12 +2,11 @@
 
 namespace App\Services\MediaServices;
 
-use App\Interfaces\Mediaable;
-use App\Models\Media;
+
+use App\Entities\Media;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use function Laravel\Prompts\select;
 use function public_path;
 
 
@@ -19,6 +18,7 @@ class MediaService
     private static $id;
     private static $filename;
     private static $extension;
+    private static $em;
 
 
     public static function upload($file, string $type, $model, $id)
@@ -29,6 +29,8 @@ class MediaService
         self::$id = $id;
         self::$filename = self::generateName();
         self::$extension = self::generateExtension();
+        self::$em = app(EntityManagerInterface::class);
+
 
         return self::saveMedia();
     }
@@ -47,37 +49,44 @@ class MediaService
     {
         self::$file->move(public_path(self::generatePath()), self::$filename . '.' . self::$extension);
 
-        return Media::query()->create([
-            'url' => self::generatePath() . '/' . self::$filename . '.' . self::$extension,
-            'name' => self::$filename . '.' . self::$extension,
-            'type' => self::$type,
-            'mediaable_id' => self::$id,
-            'mediaable_type' => self::getClass(self::$model),
-        ]);
+        $media = new Media();
+
+        $media->setUrl(self::generatePath() . '/' . self::$filename . '.' . self::$extension);
+        $media->setName(self::$filename . '.' . self::$extension);
+        $media->setType(self::$type);
+        $media->setMediableId(self::$id);
+        $media->setMediableType(self::getClass(self::$model));
+
+        self::$em->persist($media);
+        self::$em->flush();
+
+        return $media;
+
     }
 
-    public static function delete($media)
+    public static function delete($medias)
     {
-        if (!$media) {
-            return null;
-        }
+        foreach ($medias as $media) {
+            File::exists(public_path($media->getUrl()));
 
-        File::delete(public_path($media->url));
-        return $media->delete();
+            File::delete(public_path($media->getUrl()));
+            $em = app(EntityManagerInterface::class);
+            $em->remove($media);
+            $em->flush();
+        }
     }
 
     public static function replace($file, string $type, $model, $id)
     {
+        $medias = app(EntityManagerInterface::class)
+                ->getRepository(Media::class)
+                ->getMedias($id, self::getClass($model), $type);
 
-        $media = Media::query()->firstWhere([
-            'mediaable_id' => $id,
-            'mediaable_type' => self::getClass($model),
-            'type' => $type,
-        ]);
 
-        if (File::exists(public_path($media?->url))) {
-            self::delete($media);
+        if (!empty($medias)) {
+            self::delete($medias);
         }
+
 
         self::uploadIf(
             !is_null($file),
@@ -96,7 +105,7 @@ class MediaService
 
     private static function getClass($model): string
     {
-        return "App\Models\\" . ucfirst($model);
+        return "App\Entities\\" . ucfirst($model);
     }
 
     private static function get_type(): string

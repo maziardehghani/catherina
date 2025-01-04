@@ -2,17 +2,22 @@
 
 namespace App\Repositories\Media;
 
-use App\Models\Coworker;
-use App\Models\Media;
-use App\Repositories\Repository;
 
+use Doctrine\ORM\EntityRepository;
 
-
-class MediaRepository extends Repository
+class MediaRepository extends EntityRepository
 {
-    public function __construct()
+    public function getMedias($id, $model, $type)
     {
-        $this->model = Media::query();
-        $this->paginate = 20;
+        return $this->createQueryBuilder('m')
+            ->where('m.mediableId = :id')
+            ->andWhere('m.mediableType = :model')
+            ->andWhere('m.type = :type')
+            ->setParameter('id', $id)
+            ->setParameter('model', $model)
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
     }
 }
+

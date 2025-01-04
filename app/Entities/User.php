@@ -30,13 +30,6 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $mobile = null;
 
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $createdAt = null;
-
-
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $updatedAt = null;
-
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $is_sejami = false;
@@ -62,6 +55,13 @@ class User
 
     #[ORM\OneToMany(targetEntity: UsersInfosValues::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $usersInfosValues;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
+
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
 
     public function getId(): ?int
