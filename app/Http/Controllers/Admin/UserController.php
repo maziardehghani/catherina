@@ -181,7 +181,7 @@ class UserController extends Controller
     {
         $invoices = $this->entityManager
             ->createQueryBuilder()
-            ->select('i')
+            ->select('i', 't', 'o')
             ->from(Invoice::class, 'i')
             ->join('i.transaction', 't')
             ->join('t.order', 'o')
@@ -189,6 +189,7 @@ class UserController extends Controller
             ->setParameter('userId', $user->getId())
             ->getQuery()
             ->getResult();
+
 
 
         return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
