@@ -5,13 +5,15 @@ namespace App\Entities;
 
 use App\Enums\UserTypes;
 use App\Repositories\Invoice\InvoiceRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Illuminate\Support\Facades\Hash;
+use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\HasLifecycleCallbacks]
+
 #[ORM\Entity(repositoryClass: InvoiceRepository::class)]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class Invoice
 {
     #[ORM\Id]
@@ -31,6 +33,10 @@ class Invoice
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
     private bool $termConditionAccepted = false;
+
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $deletedAt = null;
 
 
     public function getId(): ?int
