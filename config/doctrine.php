@@ -113,6 +113,8 @@ return [
         //LaravelDoctrine\Extensions\Blameable\BlameableExtension::class,
         //LaravelDoctrine\Extensions\IpTraceable\IpTraceableExtension::class,
         //LaravelDoctrine\Extensions\Translatable\TranslatableExtension::class
+        LaravelDoctrine\Extensions\Timestamps\TimestampableExtension::class,
+        LaravelDoctrine\Extensions\SoftDeletes\SoftDeleteableExtension::class,
     ],
     /*
     |--------------------------------------------------------------------------

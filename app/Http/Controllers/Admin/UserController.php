@@ -177,6 +177,7 @@ class UserController extends Controller
      */
     public function invoices(User $user): JsonResponse
     {
+
         $invoices = $this->invoiceRepo->getInvoicesOfUser($user);
 
         return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
