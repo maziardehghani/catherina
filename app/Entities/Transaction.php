@@ -220,4 +220,10 @@ class Transaction
     }
 
 
+    public function getOrder() :Order
+    {
+        return $this->order;
+    }
+
+
 }

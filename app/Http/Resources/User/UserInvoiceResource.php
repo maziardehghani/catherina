@@ -18,7 +18,7 @@ class UserInvoiceResource extends JsonResource
         return [
             'amount' => number_format($this->getAmount()),
             'term_condition_accepted' => (bool)$this->getTermConditionAccepted(),
-//            'project_name' => $this->projectName,
+            'project_name' => $this->getProjectName(),
             'terminal_id' => $this->getTerminalId(),
             'trace_number' => $this->getTraceNumber(),
             'rrn' => $this->getRrn(),

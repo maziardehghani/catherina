@@ -43,4 +43,9 @@ class Order
     private Transaction $transaction;
 
 
+    public function getProject(): Project
+    {
+        return $this->project;
+    }
+
 }

@@ -137,4 +137,9 @@ class Invoice
         return $this->getTransaction()->getGateway();
     }
 
+    public function getProjectName(): string
+    {
+        return $this->getTransaction()->getOrder()->getProject()->getTitle();
+    }
+
 }
