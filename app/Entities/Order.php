@@ -43,9 +43,46 @@ class Order
     private Transaction $transaction;
 
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getProject(): Project
     {
         return $this->project;
     }
+
+    public function setProject(Project $project): self
+    {
+        $this->project = $project;
+        return $this;
+    }
+
+
+    public function getTransaction(): Transaction
+    {
+        return $this->transaction;
+    }
+
+
+    public function setTransaction(Transaction $transaction): self
+    {
+        $this->transaction = $transaction;
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+
 
 }
