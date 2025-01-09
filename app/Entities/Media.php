@@ -5,14 +5,18 @@ namespace App\Entities;
 
 
 use App\Repositories\Media\MediaRepository;
+use App\Traits\HasTimeStamp;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\Timestampable;
 
 #[Table(name: 'medias')]
 #[Entity(repositoryClass: MediaRepository::class)]
 class Media
 {
+    use HasTimeStamp;
+
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,14 +41,6 @@ class Media
 
     #[ORM\Column(type: 'integer', length: 255)]
     private int $mediableId;
-
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $createdAt = null;
-
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $updatedAt = null;
 
 
     public function getId(): int

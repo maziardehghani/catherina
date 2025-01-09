@@ -3,13 +3,18 @@
 namespace App\Entities;
 
 
+use App\Traits\HasTimeStamp;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\Timestampable;
 
 
 #[ORM\Entity]
 #[ORM\Table(name: 'users_infos_values')]
 class UsersInfosValues
 {
+    use HasTimeStamp;
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

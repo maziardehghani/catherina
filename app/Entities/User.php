@@ -5,9 +5,11 @@ namespace App\Entities;
 
 use App\Enums\UserTypes;
 use App\Repositories\User\UserRepository;
+use App\Traits\HasTimeStamp;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\Timestampable;
 use Illuminate\Support\Facades\Hash;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,6 +17,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class User
 {
+    use HasTimeStamp;
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -57,14 +62,8 @@ class User
     #[ORM\OneToMany(targetEntity: UsersInfosValues::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $usersInfosValues;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeInterface $createdAt = null;
-
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Gedmo\TimeStampable(on: 'update')]
-    private ?\DateTimeInterface $updatedAt = null;
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user')]
+    private Collection $orders;
 
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -202,32 +201,14 @@ class User
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(): void
-    {
-        $this->createdAt = new \DateTime();
-
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-
-    public function setUpdatedAt(): void
-    {
-        $this->updatedAt = new \DateTime();;
-
-    }
-
     public function getUsersInfosValues(): Collection
     {
         return $this->usersInfosValues;
+    }
+
+    public function getOrders(): Collection
+    {
+        return $this->orders;
     }
 
     public function addUsersInfosValues(UsersInfosValues $usersInfosValues): void

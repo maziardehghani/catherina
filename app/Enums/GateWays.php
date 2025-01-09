@@ -4,9 +4,8 @@ namespace App\Enums;
 
 enum GateWays: string
 {
-    case PAID = 'paid';
+    case ONLINE = 'online';
 
-    case CANCELLED = 'cancelled';
+    case RECEIPT = 'receipt';
 
-    case REFUNDED = 'refunded';
 }

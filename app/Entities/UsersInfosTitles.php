@@ -2,14 +2,19 @@
 
 namespace App\Entities;
 
+use App\Traits\HasTimeStamp;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping AS ORM;
+use Gedmo\Timestampable\Traits\Timestampable;
 
 #[ORM\Entity]
 #[ORM\Table(name: "users_infos_titles")]
 class UsersInfosTitles
 {
+    use HasTimeStamp;
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -18,13 +23,6 @@ class UsersInfosTitles
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $title = null;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTimeInterface $createdAt = null;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTimeInterface $updatedAt = null;
-
 
     #[ORM\OneToOne(targetEntity: UsersInfosValues::class, mappedBy: "usersInfosTitles")]
     private UsersInfosValues $usersInfosValues;

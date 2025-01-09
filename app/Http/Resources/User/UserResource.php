@@ -49,7 +49,7 @@ class UserResource extends JsonResource
             'company_name' => $this->getCompanyName(),
             'trading_code' => $this->getTradingCode(),
             'is_sejami' => $this->getIsSejami(),
-            'created_at' => CalendarService::getPersianDate($this->getCreatedAt()->format('Y-m-d H:i:s')),
+            'created_at' => CalendarService::getPersianDate($this->getCreatedAt()?->format('Y-m-d H:i:s')),
           ];
 
     }
