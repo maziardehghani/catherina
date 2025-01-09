@@ -39,4 +39,8 @@ class Order
     private Project $project;
 
 
+    #[ORM\OneToOne(targetEntity: Transaction::class, mappedBy: 'order')]
+    private Transaction $transaction;
+
+
 }

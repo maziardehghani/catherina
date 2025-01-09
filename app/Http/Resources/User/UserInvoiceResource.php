@@ -16,16 +16,16 @@ class UserInvoiceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'amount' => number_format($this->amount),
-            'term_condition_accepted' => (bool)$this->term_conditions_accepted,
-            'project_name' => $this->projectName,
-            'terminal_id' => $this->terminal_id,
-            'trace_number' => $this->traceNumber,
-            'rrn' => $this->rrn,
-            'secure_pan' => $this->securePan,
-            'token' => $this->token,
-            'gateway' => $this->gateWay,
-            'created_at' => CalendarService::getPersianDate($this->created_at,'Y-m-d')
+            'amount' => number_format($this->getAmount()),
+            'term_condition_accepted' => (bool)$this->getTermConditionAccepted(),
+//            'project_name' => $this->projectName,
+            'terminal_id' => $this->getTerminalId(),
+            'trace_number' => $this->getTraceNumber(),
+            'rrn' => $this->getRrn(),
+            'secure_pan' => $this->getSecurePan(),
+            'token' => $this->getToken(),
+            'gateway' => $this->getGateWay(),
+            'created_at' => CalendarService::getPersianDate($this->getCreatedAt(),'Y-m-d')
         ];
     }
 }

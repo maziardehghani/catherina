@@ -2,6 +2,8 @@
 
 namespace App\Entities;
 
+use App\Enums\GateWays;
+use App\Enums\TransactionStatuses;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Traits\HasTimeStamp;
 use DateTimeInterface;
@@ -80,5 +82,59 @@ class Invoice
     }
 
 
+// Amount Getter and Setter
+    public function getAmount(): int
+    {
+        return $this->getTransaction()->getAmount();
+    }
+
+
+// Status Getter and Setter
+    public function getStatus(): TransactionStatuses
+    {
+        return $this->getTransaction()->getStatus();
+    }
+
+
+// TerminalId Getter and Setter
+    public function getTerminalId(): int
+    {
+        return $this->getTransaction()->getTerminalId();
+    }
+
+
+// TraceNumber Getter and Setter
+    public function getTraceNumber(): int
+    {
+        return $this->getTransaction()->getTraceNumber();
+    }
+
+
+// RRN Getter and Setter
+    public function getRrn(): int
+    {
+        return $this->getTransaction()->getRrn();
+    }
+
+
+// SecurePan Getter and Setter
+    public function getSecurePan(): int
+    {
+        return $this->getTransaction()->getSecurePan();
+    }
+
+
+// Token Getter and Setter
+    public function getToken(): int
+    {
+        return $this->getTransaction()->getToken();
+    }
+
+
+// Gateway Getter and Setter
+    public function getGateway(): GateWays
+    {
+        return $this->getTransaction()->getGateway();
+    }
 
 }

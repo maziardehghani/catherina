@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 
-
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
@@ -28,6 +27,11 @@ class Transaction
 
     #[ORM\OneToOne(targetEntity: Invoice::class, mappedBy: 'transaction')]
     private Invoice $invoice;
+
+
+    #[ORM\OneToOne(targetEntity: Order::class, inversedBy: 'transaction')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'order_id')]
+    private Order $order;
 
 
     #[ORM\Column(type: 'integer', length: 10, nullable: false)]

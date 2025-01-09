@@ -38,8 +38,8 @@ class UserController extends Controller
     public function __construct(
 
         public EntityManagerInterface $entityManager,
-        public UserRepository $userRepository,
-        public MediaRepository $mediaRepository,
+        public UserRepository         $userRepository,
+        public MediaRepository        $mediaRepository,
 
     )
     {
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $pagination = $this->userRepository->paginate($request->page?? 1,5);
+        $pagination = $this->userRepository->paginate($request->page ?? 1, 5);
 
         return response()->success([
             'data' => UserResource::collection($pagination['data']),
@@ -62,6 +62,7 @@ class UserController extends Controller
             'per_page' => $pagination['per_page'],
         ], 'اطلاعات با موفقیت دریافت شد');
     }
+
     /**
      *
      * @return JsonResponse containing list of users legal
@@ -178,10 +179,19 @@ class UserController extends Controller
      */
     public function invoices(User $user): JsonResponse
     {
+        $invoices = $this->entityManager
+            ->createQueryBuilder()
+            ->select('i')
+            ->from(Invoice::class, 'i')
+            ->join('i.transaction', 't')
+            ->join('t.order', 'o')
+            ->where('o.user = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
 
 
-
-//        return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
+        return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
     }
 
     /**
