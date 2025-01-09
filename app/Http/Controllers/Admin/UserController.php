@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Invoice;
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
@@ -178,9 +179,9 @@ class UserController extends Controller
     public function invoices(User $user): JsonResponse
     {
 
-        $invoices = $this->invoiceRepo->getInvoicesOfUser($user);
 
-        return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
+
+//        return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
     }
 
     /**
