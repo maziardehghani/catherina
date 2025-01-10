@@ -209,11 +209,12 @@ class UserController extends Controller
      * @return JsonResponse contain list of user installments
      *
      */
-    public function installments(User $user): JsonResponse
+    public function installments(User $user)
     {
-        $installments = $this->installmentRepo->getInstallmentsOfUser($user);
+//        $installments = $this->installmentRepo->getInstallmentsOfUser($user);
 
-        return response()->success(UserInstallmentResource::collection($installments));
+
+
 
     }
 

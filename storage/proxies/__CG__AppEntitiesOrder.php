@@ -25,11 +25,13 @@ class Order extends \App\Entities\Order implements \Doctrine\ORM\Proxy\InternalP
         "\0".parent::class."\0".'createdAt' => [parent::class, 'createdAt', null],
         "\0".parent::class."\0".'id' => [parent::class, 'id', null],
         "\0".parent::class."\0".'project' => [parent::class, 'project', null],
+        "\0".parent::class."\0".'transaction' => [parent::class, 'transaction', null],
         "\0".parent::class."\0".'updatedAt' => [parent::class, 'updatedAt', null],
         "\0".parent::class."\0".'user' => [parent::class, 'user', null],
         'createdAt' => [parent::class, 'createdAt', null],
         'id' => [parent::class, 'id', null],
         'project' => [parent::class, 'project', null],
+        'transaction' => [parent::class, 'transaction', null],
         'updatedAt' => [parent::class, 'updatedAt', null],
         'user' => [parent::class, 'user', null],
     ];
