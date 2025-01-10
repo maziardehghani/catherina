@@ -246,7 +246,7 @@ class UserController extends Controller
      */
     public function bankAccounts(User $user): JsonResponse
     {
-        return response()->success(new UserBankAccountResource($user->load('userInfos.UserInfoTitle')));
+        return response()->success(new UserBankAccountResource($user));
     }
 
     /**

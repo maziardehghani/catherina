@@ -38,7 +38,7 @@ class Invoice
 
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
-    private bool $termConditionAccepted = false;
+    private bool $termConditionsAccepted = false;
 
 
     #[ORM\Column(type: 'datetime', nullable: true)]
