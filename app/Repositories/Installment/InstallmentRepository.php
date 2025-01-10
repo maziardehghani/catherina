@@ -29,6 +29,19 @@ class InstallmentRepository extends EntityRepository
             ->getResult();
 
     }
+
+    public function getSumInstallmentsOfUser(User $user)
+    {
+        return $this->createQueryBuilder('i')
+            ->select('SUM(i.amount)')
+            ->join('i.invoice', 'inv')
+            ->join('inv.transaction', 't')
+            ->join('t.order', 'o')
+            ->where('o.user = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
 
 

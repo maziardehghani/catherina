@@ -19,6 +19,18 @@ class TransactionRepository extends EntityRepository
             ->getResult();
 
     }
+
+    public function getSumInvoicesOfUser(User $user)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('SUM(t.amount)')
+            ->innerJoin('t.order', 'o')
+            ->innerJoin('o.user', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
 
 

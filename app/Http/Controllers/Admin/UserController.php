@@ -19,6 +19,7 @@ use App\Http\Resources\UserListResource;
 use App\Repositories\Installment\InstallmentRepository;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Media\MediaRepository;
+use App\Repositories\Project\ProjectRepository;
 use App\Repositories\Transaction\TransactionRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
@@ -46,6 +47,7 @@ class UserController extends Controller
         public InvoiceRepository      $invoiceRepository,
         public TransactionRepository  $transactionRepository,
         public InstallmentRepository  $installmentRepository,
+        public ProjectRepository      $projectRepository,
 
     )
     {
@@ -211,7 +213,7 @@ class UserController extends Controller
      * @return JsonResponse contain list of user installments
      *
      */
-    public function installments(User $user)
+    public function installments(User $user): JsonResponse
     {
         $installments = $this->installmentRepository->getInstallmentsOfUser($user);
 
@@ -228,9 +230,9 @@ class UserController extends Controller
     public function investmentReport(User $user): JsonResponse
     {
         $data = [
-            'total_invoices_amount' => $this->transactionRepo->getSumInvoicesOfUser($user),
-            'total_installments_amount' => $this->installmentRepo->getSumInstallmentsOfUser($user),
-            'total_projects_count' => $this->projectRepo->getCountProjectOfUser($user)
+            'total_invoices_amount' => $this->transactionRepository->getSumInvoicesOfUser($user),
+            'total_installments_amount' => $this->installmentRepository->getSumInstallmentsOfUser($user),
+            'total_projects_count' => $this->projectRepository->getCountProjectOfUser($user)
         ];
 
         return response()->success(new UserInvestmentReportResource($data));

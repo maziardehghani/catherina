@@ -2,22 +2,27 @@
 
 namespace App\Repositories\Project;
 
-use App\Enums\Statuses;
-use App\Models\FarabourseProject;
-use App\Models\Invoice;
-use App\Models\Media;
-use App\Models\Project;
-use App\Models\User;
-use App\Repositories\Repository;
+
+use App\Entities\User;
+use App\Enums\TransactionStatuses;
 use Doctrine\ORM\EntityRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 class ProjectRepository extends EntityRepository
 {
+    public function getCountProjectOfUser(User $user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->join('p.orders', 'o')
+            ->join('o.transaction', 't')
+            ->where('t.status = :status')
+            ->andWhere('o.user = :userId')
+            ->setParameter('status', 'paid')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getSingleScalarResult();
 
+    }
 }
 
 
