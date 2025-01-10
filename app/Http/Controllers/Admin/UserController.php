@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Entities\Invoice;
+
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
@@ -18,6 +18,7 @@ use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Media\MediaRepository;
+use App\Repositories\Transaction\TransactionRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
 use App\Traits\Exporter;
@@ -42,6 +43,7 @@ class UserController extends Controller
         public UserRepository         $userRepository,
         public MediaRepository        $mediaRepository,
         public InvoiceRepository      $invoiceRepository,
+        public TransactionRepository  $transactionRepository,
 
     )
     {
@@ -196,7 +198,7 @@ class UserController extends Controller
      */
     public function transactions(User $user): JsonResponse
     {
-        $transactions = $user->transactions()->latest()->paginate($this->transactionRepo->paginate);
+        $transactions = $this->transactionRepository->getTransactionsOfUser($user);
 
         return response()->success(UserTransactionResource::collection($transactions));
 

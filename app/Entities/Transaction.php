@@ -58,7 +58,7 @@ class Transaction
 
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    private int $token;
+    private string $token;
 
 
     #[ORM\Column(type: Types::ENUM, nullable: false)]
@@ -75,6 +75,12 @@ class Transaction
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $deletedAt = null;
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getInvoice(): Invoice
     {
@@ -160,7 +166,7 @@ class Transaction
     }
 
 // Token Getter and Setter
-    public function getToken(): int
+    public function getToken(): string
     {
         return $this->token;
     }

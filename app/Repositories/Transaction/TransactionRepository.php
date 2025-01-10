@@ -2,16 +2,23 @@
 
 namespace App\Repositories\Transaction;
 
-use App\Enums\Statuses;
-use App\Models\Transaction;
-use App\Repositories\Repository;
-use App\Services\CalendarServices\CalendarService;
-use Carbon\Carbon;
+use App\Entities\User;
 use Doctrine\ORM\EntityRepository;
 
 class TransactionRepository extends EntityRepository
 {
+    public function getTransactionsOfUser(User $user)
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('o', 'u')
+            ->innerJoin('t.order', 'o')
+            ->innerJoin('o.user', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
 
+    }
 }
 
 

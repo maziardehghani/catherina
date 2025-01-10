@@ -16,16 +16,16 @@ class UserTransactionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'amount' => $this->amount,
-            'status' => $this->statusTitle,
-            'terminal_id' => $this->terminal_id,
-            'trace_number' => $this->trace_number,
-            'rrn' => $this->rrn,
-            'secure_pan' => $this->secure_pan,
-            'token' => $this->token,
-            'gateWay' => $this->gateWay,
-            'created_at' => CalendarService::getPersianDate($this->created_at,"Y-m-d H:i:s")
+            'id' => $this->getId(),
+            'amount' => $this->getAmount(),
+            'status' => $this->getStatus(),
+            'terminal_id' => $this->getTerminalId(),
+            'trace_number' => $this->getTraceNumber(),
+            'rrn' => $this->getRrn(),
+            'secure_pan' => $this->getSecurePan(),
+            'token' => $this->getToken(),
+            'gateWay' => $this->getGateway(),
+            'created_at' => CalendarService::getPersianDate($this->getCreatedAt(),"Y-m-d H:i:s")
         ];
     }
 }
