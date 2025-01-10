@@ -16,6 +16,7 @@ use App\Http\Resources\User\LegalUsersResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
+use App\Repositories\Installment\InstallmentRepository;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Media\MediaRepository;
 use App\Repositories\Transaction\TransactionRepository;
@@ -44,6 +45,7 @@ class UserController extends Controller
         public MediaRepository        $mediaRepository,
         public InvoiceRepository      $invoiceRepository,
         public TransactionRepository  $transactionRepository,
+        public InstallmentRepository  $installmentRepository,
 
     )
     {
@@ -211,11 +213,9 @@ class UserController extends Controller
      */
     public function installments(User $user)
     {
-//        $installments = $this->installmentRepo->getInstallmentsOfUser($user);
+        $installments = $this->installmentRepository->getInstallmentsOfUser($user);
 
-
-
-
+        return response()->success(UserInstallmentResource::collection($installments));
     }
 
     /**

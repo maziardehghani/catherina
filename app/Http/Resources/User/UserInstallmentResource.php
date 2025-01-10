@@ -16,10 +16,10 @@ class UserInstallmentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'amount' => number_format($this->amount),
-            'status' => $this->statusTitle,
-            'description' => $this->description,
-            'due_date' => CalendarService::getPersianDate($this->due_date,'Y-m-d')
+            'amount' => number_format($this->getAmount()),
+            'status' => $this->getStatus(),
+            'description' => $this->getDescription(),
+            'due_date' => CalendarService::getPersianDate($this->getDueDate(),'Y-m-d')
         ];
     }
 }

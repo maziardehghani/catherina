@@ -7,6 +7,7 @@ use App\Enums\TransactionStatuses;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Traits\HasTimeStamp;
 use DateTimeInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -26,6 +27,10 @@ class Invoice
     #[ORM\OneToOne(targetEntity: Transaction::class, inversedBy: "invoice")]
     #[ORM\JoinColumn(name: "transaction_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private Transaction $transaction;
+
+
+    #[ORM\OneToMany(targetEntity: Invoice::class, mappedBy: "invoice_id")]
+    public Collection $installments;
 
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]

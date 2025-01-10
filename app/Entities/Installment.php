@@ -53,4 +53,84 @@ class Installment
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $paymentDate = null;
+
+
+
+    // Getter and Setter for id
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    // Getter and Setter for invoice
+    public function getInvoice(): Invoice
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(Invoice $invoice): self
+    {
+        $this->invoice = $invoice;
+        return $this;
+    }
+
+    // Getter and Setter for amount
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(?int $amount): self
+    {
+        $this->amount = $amount;
+        return $this;
+    }
+
+    // Getter and Setter for status
+    public function getStatus(): TransactionStatuses
+    {
+        return $this->status;
+    }
+
+    public function setStatus(TransactionStatuses $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    // Getter and Setter for description
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    // Getter and Setter for dueDate
+    public function getDueDate(): DateTimeInterface
+    {
+        return $this->dueDate;
+    }
+
+    public function setDueDate(DateTimeInterface $dueDate): self
+    {
+        $this->dueDate = $dueDate;
+        return $this;
+    }
+
+    // Getter and Setter for paymentDate
+    public function getPaymentDate(): ?DateTimeInterface
+    {
+        return $this->paymentDate;
+    }
+
+    public function setPaymentDate(?DateTimeInterface $paymentDate): self
+    {
+        $this->paymentDate = $paymentDate;
+        return $this;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Entities\Installment;
 use App\Entities\Invoice;
 use App\Entities\Order;
 use App\Entities\Project;
@@ -11,6 +12,7 @@ use App\Enums\GateWays;
 use App\Enums\Statuses;
 use App\Enums\TransactionStatuses;
 use App\Enums\UserTypes;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -79,9 +81,18 @@ class InvoiceSeeder extends Seeder
                 $invoice->setTermConditionAccepted(true);
                 $invoice->setTransaction($transaction);
 
+
+                $installment = new Installment();
+                $installment->setInvoice($invoice);
+                $installment->setAmount(1000);
+                $installment->setDescription('test');
+                $installment->setDueDate(Carbon::now());
+                $installment->setStatus(TransactionStatuses::PAID);
+
                 $em->persist($order);
                 $em->persist($transaction);
                 $em->persist($invoice);
+                $em->persist($installment);
             }
 
             $em->persist($user);

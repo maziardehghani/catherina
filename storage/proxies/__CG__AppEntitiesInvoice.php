@@ -32,6 +32,7 @@ class Invoice extends \App\Entities\Invoice implements \Doctrine\ORM\Proxy\Inter
         'createdAt' => [parent::class, 'createdAt', null],
         'deletedAt' => [parent::class, 'deletedAt', null],
         'id' => [parent::class, 'id', null],
+        'installments' => [parent::class, 'installments', null],
         'termConditionAccepted' => [parent::class, 'termConditionAccepted', null],
         'trace_code' => [parent::class, 'trace_code', null],
         'transaction' => [parent::class, 'transaction', null],

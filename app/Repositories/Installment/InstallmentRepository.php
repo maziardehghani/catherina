@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Installment;
 
+use App\Entities\User;
 use App\Enums\Statuses;
 use App\Models\Installment;
 use App\Models\Status;
@@ -15,7 +16,19 @@ use Illuminate\Support\Facades\Log;
 
 class InstallmentRepository extends EntityRepository
 {
+    public function getInstallmentsOfUser(User $user)
+    {
+        return $this->createQueryBuilder('i')
+            ->addSelect('inv', 't', 'o')
+            ->join('i.invoice', 'inv')
+            ->join('inv.transaction', 't')
+            ->join('t.order', 'o')
+            ->where('o.user = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
 
+    }
 }
 
 
