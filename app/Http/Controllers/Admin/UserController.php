@@ -16,6 +16,7 @@ use App\Http\Resources\User\LegalUsersResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserTransactionResource;
 use App\Http\Resources\UserListResource;
+use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Media\MediaRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\MediaServices\MediaService;
@@ -40,6 +41,7 @@ class UserController extends Controller
         public EntityManagerInterface $entityManager,
         public UserRepository         $userRepository,
         public MediaRepository        $mediaRepository,
+        public InvoiceRepository      $invoiceRepository,
 
     )
     {
@@ -179,18 +181,8 @@ class UserController extends Controller
      */
     public function invoices(User $user): JsonResponse
     {
-        $invoices = $this->entityManager
-            ->createQueryBuilder()
-            ->select('i', 't', 'o')
-            ->from(Invoice::class, 'i')
-            ->join('i.transaction', 't')
-            ->join('t.order', 'o')
-            ->where('o.user = :userId')
-            ->setParameter('userId', $user->getId())
-            ->getQuery()
-            ->getResult();
 
-
+        $invoices = $this->invoiceRepository->getInvoicesOfUser($user);
 
         return response()->success(UserInvoiceResource::collection($invoices), 'صورتحساب های کاربر دریافت شد');
     }

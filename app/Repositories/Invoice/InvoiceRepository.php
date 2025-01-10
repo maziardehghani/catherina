@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Invoice;
 
+use App\Entities\User;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Repositories\Repository;
@@ -11,8 +12,19 @@ use Doctrine\ORM\EntityRepository;
 
 class InvoiceRepository extends EntityRepository
 {
-
+    public function getInvoicesOfUser(User $user)
+    {
+        return $this->createQueryBuilder('i')
+            ->addSelect('t', 'o')
+            ->innerJoin('i.transaction', 't')
+            ->innerJoin('t.order', 'o')
+            ->where('o.user = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
+    }
 }
+
 
 
 
