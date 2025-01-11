@@ -5,16 +5,17 @@ namespace App\Entities;
 
 use App\Enums\ContractTypes;
 use App\Enums\DocumentTypes;
-use App\Repositories\Project\ProjectRepository;
 use App\Traits\HasTimeStamp;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 
 #[ORM\Entity]
 #[ORM\Table(name: 'contracts')]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class Contract
 {
     use HasTimeStamp;
@@ -46,11 +47,13 @@ class Contract
     private ContractTypes $type;
 
 
-
     #[ORM\Column(type: Types::ENUM)]
     private DocumentTypes $documentType;
 
 
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $deletedAt= null   ;
 
 
 }
