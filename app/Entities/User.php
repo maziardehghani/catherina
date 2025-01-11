@@ -7,6 +7,7 @@ use App\Enums\UserTypes;
 use App\Repositories\User\UserRepository;
 use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,7 +19,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class User
 {
     use HasTimeStamp,HasStatus;
-
 
 
     #[ORM\Id]
@@ -70,7 +70,35 @@ class User
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $username;
 
+    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: "users")]
+    private Collection $roles;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
+
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+        }
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        $this->roles->removeElement($role);
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
