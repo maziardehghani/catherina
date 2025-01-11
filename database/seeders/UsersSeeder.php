@@ -2,45 +2,57 @@
 
 namespace Database\Seeders;
 
-use App\Models\Installment;
-use App\Models\Invoice;
-use App\Models\Order;
-use App\Models\Transaction;
-use App\Models\User;
+use App\Entities\Status;
+use App\Entities\User;
+use App\Enums\UserTypes;
+use App\Traits\DbTruncater;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Log;
 
 class UsersSeeder extends Seeder
 {
+    use DbTruncater;
+
+    public function __construct(
+        public EntityManagerInterface $entityManager
+    ) {
+    }
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory()->count(10)->create()->each(function ($user) {
 
-            Order::factory()->count(10)->create(['user_id' => $user->id ])
-                ->each(function ($order) use ($user) {
+        $this->truncate($this->entityManager, 'users');
 
+        $status = $this->entityManager->find(Status::class, 1);
 
-                    Transaction::factory()->count(1)->create(['order_id' => $order->id])
-                        ->each(function ($transaction) use ($order) {
+        $batchSize = 20;
+        $totalUsers = 10;
 
-                            if ($transaction->status_id == 18) { // it means if transaction not paid
+        for ($i = 1; $i <= $totalUsers; $i++) {
+            $user = new User();
+            $user->setName(fake()->firstName());
+            $user->setFamily(fake()->lastName());
+            $user->setEmail(fake()->unique()->safeEmail());
+            $user->setMobile(fake()->unique()->phoneNumber());
+            $user->setIsSejami(fake()->boolean());
+            $user->setIsPrivateInvestor(fake()->boolean());
+            $user->setStatus($status); // Set status (pre-fetched)
+            $user->setBio(fake()->text());
+            $user->setType(fake()->randomElement(UserTypes::userTypes()));
+            $user->setPassword(fake()->password());
 
-                                Invoice::factory()->count(1)->create(['transaction_id' => $transaction->id])
-                                    ->each(function ($invoice) use ($order) {
+            $this->entityManager->persist($user);
 
-                                        Installment::factory()->count(3)->create(['invoice_id' => $invoice->id]);
+            if ($i % $batchSize === 0) {
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+            }
+        }
 
-                                    });
-                            }
-
-                        });
-
-
-                });
-
-        });
+        $this->entityManager->flush();
+        $this->entityManager->clear();
     }
 }

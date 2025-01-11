@@ -28,4 +28,32 @@ class Status
     private string $title;
 
 
+    // Getter and Setter for $model
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    public function setModel(string $model): self
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+// Getter and Setter for $title
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+
+
+
+
 }

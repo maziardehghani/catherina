@@ -31,10 +31,10 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $family = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255 , unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $mobile = null;
 
 
@@ -44,9 +44,6 @@ class User
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $is_private_investor = false;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $status_id = 1;
 
 
     #[ORM\Column(type: Types::STRING)]
@@ -69,9 +66,6 @@ class User
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $username;
 
     #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: "users")]
     private Collection $roles;
@@ -172,18 +166,6 @@ class User
     public function setIsPrivateInvestor(bool $is_private_investor): self
     {
         $this->is_private_investor = $is_private_investor;
-        return $this;
-    }
-
-    // Getter and Setter for $status_id
-    public function getStatusId(): int
-    {
-        return $this->status_id;
-    }
-
-    public function setStatusId(int $status_id): self
-    {
-        $this->status_id = $status_id;
         return $this;
     }
 

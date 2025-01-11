@@ -2,56 +2,37 @@
 
 namespace Database\Seeders;
 
+use App\Entities\Status;
+use App\Entities\User;
 use App\Enums\Statuses;
-use App\Models\Installment;
-use App\Models\Project;
-use App\Models\Status;
-use App\Models\Ticket;
-use App\Models\Transaction;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Traits\DbTruncater;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Database\Seeder;
 
 class StatusesSeeder extends Seeder
 {
+    use DbTruncater;
+
+    public function __construct(
+        public EntityManagerInterface $entityManager
+    ){}
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        collect(Statuses::commonStatuses())->map(function ($status) {
-            Status::query()->create([
-                'model' => User::class,
-                'title' => $status,
-            ]);
+
+        $this->truncate($this->entityManager, 'statuses');
+
+        collect(Statuses::commonStatuses())->map(function ($item) {
+            $status = new Status();
+            $status->setTitle($item);
+            $status->setModel(User::class);
+            $this->entityManager->persist($status);
+            $this->entityManager->flush();
+
         });
 
-        collect(Statuses::TicketStatuses())->map(function ($status) {
-            Status::query()->create([
-                'model' => Ticket::class,
-                'title' => $status,
-            ]);
-        });
 
-        collect(Statuses::ProjectStatuses())->map(function ($status) {
-            Status::query()->create([
-                'model' => Project::class,
-                'title' => $status,
-            ]);
-        });
-
-        collect(Statuses::TransactionStatuses())->map(function ($status) {
-            Status::query()->create([
-                'model' => Transaction::class,
-                'title' => $status,
-            ]);
-        });
-
-        collect(Statuses::installmentStatuses())->map(function ($status) {
-            Status::query()->create([
-                'model' => Installment::class,
-                'title' => $status,
-            ]);
-        });
     }
 }

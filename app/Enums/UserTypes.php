@@ -10,8 +10,8 @@ enum UserTypes: string
     static function userTypes(): array
     {
         return [
-            self::REAL->value,
-            self::LEGAL->value,
+            self::REAL,
+            self::LEGAL,
         ];
     }
 }

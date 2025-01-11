@@ -43,4 +43,73 @@ class Article
     #[ORM\Column(type: Types::TEXT, length: 255, nullable: false)]
     private string $content;
 
+
+    // Getters and Setters
+
+    // ID
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    // User
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    // Title
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    // Slug
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    // Intro
+    public function getIntro(): string
+    {
+        return $this->intro;
+    }
+
+    public function setIntro(string $intro): self
+    {
+        $this->intro = $intro;
+        return $this;
+    }
+
+    // Content
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+        return $this;
+    }
+
 }

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait HasStatus
 {
-    #[ORM\OneToOne(targetEntity: Status::class, inversedBy: 'status')]
+    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'status')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'status_id')]
     private Status $status;
 

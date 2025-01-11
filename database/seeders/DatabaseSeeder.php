@@ -12,21 +12,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CitySeeder::class,
-            WarrantiesSeeder::class,
+//            CitySeeder::class,
+//            WarrantiesSeeder::class,
             StatusesSeeder::class,
-            ProjectSeeder::class,
+//            ProjectSeeder::class,
             UsersSeeder::class,
-            UserInfosTitleSeeder::class,
-            UserInfosValueSeeder::class,
-            PermissionSeeder::class,
-            ArticleSeeder::class,
-            SliderSeeder::class,
-            TicketSeeder::class,
-            CoworkerSeeder::class,
-            ProjectUserExpertSeeder::class,
-            ContractSeeder::class,
-            CommentSeeder::class,
+//            UserInfosTitleSeeder::class,
+//            UserInfosValueSeeder::class,
+//            PermissionSeeder::class,
+//            ArticleSeeder::class,
+//            SliderSeeder::class,
+//            TicketSeeder::class,
+//            CoworkerSeeder::class,
+//            ProjectUserExpertSeeder::class,
+//            ContractSeeder::class,
+//            CommentSeeder::class,
         ]);
     }
 }
