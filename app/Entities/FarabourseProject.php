@@ -25,6 +25,9 @@ class FarabourseProject
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToOne(targetEntity: Project::class, inversedBy: 'farabourseProject')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'project_id')]
+    private Project $project;
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $traceCode = null;
 
