@@ -53,7 +53,98 @@ class Contract
 
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTimeInterface $deletedAt= null   ;
+    private ?DateTimeInterface $deletedAt= null;
+
+    // Getter and Setter for id
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+// Getter and Setter for user
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+// Getter and Setter for project
+    public function getProject(): Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(Project $project): self
+    {
+        $this->project = $project;
+        return $this;
+    }
+
+// Getter and Setter for title
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+// Getter and Setter for description
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+// Getter and Setter for type
+    public function getType(): ContractTypes
+    {
+        return $this->type;
+    }
+
+    public function setType(ContractTypes $type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+// Getter and Setter for documentType
+    public function getDocumentType(): DocumentTypes
+    {
+        return $this->documentType;
+    }
+
+    public function setDocumentType(DocumentTypes $documentType): self
+    {
+        $this->documentType = $documentType;
+        return $this;
+    }
+
+// Getter and Setter for deletedAt
+    public function getDeletedAt(): ?DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
 
 
 }

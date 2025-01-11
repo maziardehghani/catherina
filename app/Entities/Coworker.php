@@ -33,6 +33,35 @@ class Coworker
     private ?string  $link = null;
 
 
+// Getter and Setter for id
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+// Getter and Setter for title
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+// Getter and Setter for link
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): self
+    {
+        $this->link = $link;
+        return $this;
+    }
 
 
 }
