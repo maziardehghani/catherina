@@ -28,6 +28,10 @@ class Project
     private User $user;
 
 
+    #[ORM\OneToOne(targetEntity: Warranty::class, inversedBy: 'warranty_id')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'warranty_id')]
+    private Warranty $warranty;
+
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $title = null;
 
@@ -55,8 +59,18 @@ class Project
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $projectRisks = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $warrantyInquiryId = null;
+// Getter for warranty
+    public function getWarranty(): Warranty
+    {
+        return $this->warranty;
+    }
+
+// Setter for warranty
+    public function setWarranty(Warranty $warranty): self
+    {
+        $this->warranty = $warranty;
+        return $this;
+    }
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $warrantyDetails = null;
@@ -181,17 +195,6 @@ class Project
         return $this;
     }
 
-// Getter and Setter for warrantyInquiryId
-    public function getWarrantyInquiryId(): ?int
-    {
-        return $this->warrantyInquiryId;
-    }
-
-    public function setWarrantyInquiryId(?int $warrantyInquiryId): self
-    {
-        $this->warrantyInquiryId = $warrantyInquiryId;
-        return $this;
-    }
 
 // Getter and Setter for warrantyDetails
     public function getWarrantyDetails(): ?string
