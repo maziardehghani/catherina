@@ -61,7 +61,7 @@ class UserController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $pagination = $this->userRepository->paginate($request->page ?? 1, 5);
+        $pagination = $this->userRepository->paginate($request->page ?? 1, 20);
 
         return response()->success([
             'data' => UserResource::collection($pagination['data']),

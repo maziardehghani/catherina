@@ -2,23 +2,15 @@
 
 namespace App\Providers;
 
-use App\Entities\Media;
-use App\Entities\User;
 use App\Events\FarabourseDataEvent;
 use App\Events\VerificationEvent;
 use App\Listeners\FarabourseDataListener;
 use App\Listeners\ShareHoldersDataListener;
 use App\Listeners\StakMembersDataListener;
 use App\Listeners\VerificationListener;
-use App\Models\FarabourseProject;
-use App\Models\Project;
-use App\Observers\ProjectStatusLogObserver;
-use App\Repositories\Media\MediaRepository;
-use App\Repositories\User\UserRepository;
 use App\Services\ResponseServices\ResponseService;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -95,7 +87,5 @@ class AppServiceProvider extends ServiceProvider
             StakMembersDataListener::class,
         );
 
-
-        Project::observe(ProjectStatusLogObserver::class);
     }
 }
