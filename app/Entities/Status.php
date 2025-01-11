@@ -26,4 +26,6 @@ class Status
 
     #[ORM\Column(type: 'string', unique: true)]
     private string $title;
+
+
 }

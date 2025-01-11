@@ -1,33 +1,28 @@
 <?php
 
 namespace App\Traits;
-use App\Models\Status;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+
+use App\Entities\Status;
+use Doctrine\ORM\Mapping as ORM;
+
 
 trait HasStatus
 {
-    public function status(): BelongsTo
+    #[ORM\OneToOne(targetEntity: Status::class, inversedBy: 'status')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'status_id')]
+    private Status $status;
+
+    public function getStatus(): Status
     {
-        return $this->belongsTo(Status::class, 'status_id');
+        return $this->status;
     }
 
-    public function scopeWhereStatusTitle($query, $statusTitle)
+    public function setStatus(Status $status): self
     {
-        return $query->whereHas('status', function ($query) use ($statusTitle) {
-            $query->where('title', $statusTitle);
-        });
+        $this->status = $status;
+        return $this;
     }
 
-    public function statusTitle():Attribute
-    {
-        return Attribute::make(function (){
-            return $this->status?->title;
-        });
-    }
 
-    public function persianStatus():Attribute
-    {
-        return Attribute::make(get: fn() => Status::$persianStatuses[$this->statusTitle] ?? null);
-    }
 }

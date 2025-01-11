@@ -25,11 +25,13 @@ class Project extends \App\Entities\Project implements \Doctrine\ORM\Proxy\Inter
         "\0".parent::class."\0".'createdAt' => [parent::class, 'createdAt', null],
         "\0".parent::class."\0".'id' => [parent::class, 'id', null],
         "\0".parent::class."\0".'orders' => [parent::class, 'orders', null],
+        "\0".parent::class."\0".'status' => [parent::class, 'status', null],
         "\0".parent::class."\0".'title' => [parent::class, 'title', null],
         "\0".parent::class."\0".'updatedAt' => [parent::class, 'updatedAt', null],
         'createdAt' => [parent::class, 'createdAt', null],
         'id' => [parent::class, 'id', null],
         'orders' => [parent::class, 'orders', null],
+        'status' => [parent::class, 'status', null],
         'title' => [parent::class, 'title', null],
         'updatedAt' => [parent::class, 'updatedAt', null],
     ];

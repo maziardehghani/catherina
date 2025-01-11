@@ -5,11 +5,11 @@ namespace App\Entities;
 
 use App\Enums\UserTypes;
 use App\Repositories\User\UserRepository;
+use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\Timestampable;
 use Illuminate\Support\Facades\Hash;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -17,7 +17,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class User
 {
-    use HasTimeStamp;
+    use HasTimeStamp,HasStatus;
+
 
 
     #[ORM\Id]

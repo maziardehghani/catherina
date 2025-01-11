@@ -4,8 +4,8 @@ namespace App\Entities;
 
 
 use App\Enums\GateWays;
-use App\Enums\TransactionStatuses;
 use App\Repositories\Transaction\TransactionRepository;
+use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
@@ -17,7 +17,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
 {
-    use HasTimeStamp;
+    use HasTimeStamp,HasStatus;
+
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,10 +37,6 @@ class Transaction
 
     #[ORM\Column(type: 'integer', length: 10, nullable: false)]
     private int $amount;
-
-
-    #[ORM\Column(type: Types::ENUM, nullable: false)]
-    private TransactionStatuses $status;
 
 
     #[ORM\Column(type: 'integer', length: 10, nullable: false)]
@@ -105,17 +102,6 @@ class Transaction
         return $this;
     }
 
-// Status Getter and Setter
-    public function getStatus(): TransactionStatuses
-    {
-        return $this->status;
-    }
-
-    public function setStatus(TransactionStatuses $status): self
-    {
-        $this->status = $status;
-        return $this;
-    }
 
 // TerminalId Getter and Setter
     public function getTerminalId(): int

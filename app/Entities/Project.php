@@ -4,6 +4,7 @@ namespace App\Entities;
 
 
 use App\Repositories\Project\ProjectRepository;
+use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'projects')]
 class Project
 {
-    use HasTimeStamp;
+    use HasTimeStamp,HasStatus;
+
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

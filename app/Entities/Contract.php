@@ -5,6 +5,7 @@ namespace App\Entities;
 
 use App\Enums\ContractTypes;
 use App\Enums\DocumentTypes;
+use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
@@ -18,7 +19,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class Contract
 {
-    use HasTimeStamp;
+    use HasTimeStamp,HasStatus;
+
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
