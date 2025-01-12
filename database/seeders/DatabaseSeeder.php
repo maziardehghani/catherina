@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Entities\Contract;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             ProjectSeeder::class,
             InvoiceSeeder::class,
+            ArticleSeeder::class,
+            ContractSeeder::class,
 //            UserInfosTitleSeeder::class,
 //            UserInfosValueSeeder::class,
 //            PermissionSeeder::class,

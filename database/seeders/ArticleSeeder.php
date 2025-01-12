@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Entities\Article;
+use App\Entities\Status;
 use App\Entities\User;
 use App\Traits\DbTruncater;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,14 +23,19 @@ class ArticleSeeder extends Seeder
     {
         $this->truncate($this->entityManager,'articles');
         $user = $this->entityManager->find(User::class,1);
+        $status = $this->entityManager->find(Status::class,1);
 
-        $article = new Article();
-        $article->setUser($user);
-        $article->setTitle(fake()->title());
-        $article->setSlug(fake()->slug());
-        $article->setIntro(fake()->paragraph());
-        $article->setContent(fake()->paragraph());
-        $this->entityManager->persist($article);
+        for ($i = 0; $i < 10; $i++  ) {
+
+            $article = new Article();
+            $article->setUser($user);
+            $article->setTitle(fake()->title());
+            $article->setSlug(fake()->slug());
+            $article->setIntro(fake()->paragraph());
+            $article->setContent(fake()->paragraph());
+            $article->setStatus($status);
+            $this->entityManager->persist($article);
+        }
         $this->entityManager->flush();
 
     }

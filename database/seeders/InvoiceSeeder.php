@@ -93,17 +93,9 @@ class InvoiceSeeder extends Seeder
 
 
         }catch (\Exception $e){
+            $this->entityManager->getConnection()->rollBack();
             Log::error($e->getMessage());
-            dd($e->getMessage());
         }
-
-
 
     }
 }
-
-//
-//
-
-
-
