@@ -21,16 +21,7 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             ArticleSeeder::class,
             ContractSeeder::class,
-//            UserInfosTitleSeeder::class,
-//            UserInfosValueSeeder::class,
-//            PermissionSeeder::class,
-//            ArticleSeeder::class,
-//            SliderSeeder::class,
-//            TicketSeeder::class,
-//            CoworkerSeeder::class,
-//            ProjectUserExpertSeeder::class,
-//            ContractSeeder::class,
-//            CommentSeeder::class,
+            CoworkerSeeder::class,
         ]);
     }
 }
