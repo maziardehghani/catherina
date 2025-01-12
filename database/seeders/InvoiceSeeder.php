@@ -36,7 +36,6 @@ class InvoiceSeeder extends Seeder
         $this->truncate($this->entityManager,'invoices');
         $this->truncate($this->entityManager,'transactions');
         $this->truncate($this->entityManager,'orders');
-        $this->truncate($this->entityManager,'installments');
 
 
         $status = $this->entityManager->find(Status::class, 1);
@@ -71,17 +70,6 @@ class InvoiceSeeder extends Seeder
                 $invoice->setTraceCode(fake()->shuffleString());
                 $invoice->setTermConditionAccepted(fake()->boolean());
                 $invoice->setTransaction($transaction);
-
-//                for ($i = 0; $i < 4; $i++  ) {
-//                    $installment = new Installment();
-//                    $installment->setInvoice($invoice);
-//                    $installment->setAmount(fake()->numberBetween(1, 999999));
-//                    $installment->setDescription(fake()->text());
-//                    $installment->setDueDate(fake()->dateTime());
-//                    $installment->setStatus($status);
-//                    $this->entityManager->persist($installment);
-//
-//                }
 
                 $this->entityManager->persist($order);
                 $this->entityManager->persist($transaction);
