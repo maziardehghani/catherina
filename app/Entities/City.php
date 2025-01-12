@@ -27,5 +27,36 @@ class City
 
     #[ORM\ManyToOne(targetEntity: State::class, inversedBy: 'cities')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'state_id')]
-    private string $state;
+    private State $state;
+
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getState(): State
+    {
+        return $this->state;
+    }
+
+    public function setState(State $state): self
+    {
+        $this->state = $state;
+        return $this;
+    }
+
+
 }

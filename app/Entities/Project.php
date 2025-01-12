@@ -28,7 +28,7 @@ class Project
     private User $user;
 
 
-    #[ORM\OneToOne(targetEntity: Warranty::class, inversedBy: 'warranty_id')]
+    #[ORM\ManyToOne(targetEntity: Warranty::class, inversedBy: 'warranty_id')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'warranty_id')]
     private Warranty $warranty;
 
@@ -38,8 +38,9 @@ class Project
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
     private ?string $slug = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $cityId = null;
+    #[ORM\ManyToOne(targetEntity: City::class, inversedBy: 'projects')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'city_id')]
+    private City $city;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private ?float $percent = null;
@@ -111,15 +112,15 @@ class Project
         return $this;
     }
 
-// Getter and Setter for cityId
-    public function getCityId(): ?int
+// Getter and Setter for city
+    public function getCity(): City
     {
-        return $this->cityId;
+        return $this->city;
     }
 
-    public function setCityId(?int $cityId): self
+    public function setCity(City $city): self
     {
-        $this->cityId = $cityId;
+        $this->city = $city;
         return $this;
     }
 
@@ -220,6 +221,11 @@ class Project
         return $this;
     }
 
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
 
 
 
