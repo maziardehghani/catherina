@@ -6,12 +6,14 @@ use App\Entities\Installment;
 use App\Entities\Invoice;
 use App\Entities\Order;
 use App\Entities\Project;
+use App\Entities\Status;
 use App\Entities\Transaction;
 use App\Entities\User;
 use App\Enums\GateWays;
 use App\Enums\Statuses;
 use App\Enums\TransactionStatuses;
 use App\Enums\UserTypes;
+use App\Traits\DbTruncater;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,87 +22,77 @@ use Illuminate\Support\Facades\Log;
 
 class InvoiceSeeder extends Seeder
 {
+
+    use DbTruncater;
+    public function __construct(
+        public EntityManagerInterface $entityManager
+    ){}
+
+
     /**
      * Run the database seeds.
      */
+
+
     public function run(): void
     {
 
-
-        $em = app(EntityManagerInterface::class);
-
-        $em->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
-        $em->getConnection()->executeStatement('TRUNCATE TABLE users');
-        $em->getConnection()->executeStatement('TRUNCATE TABLE invoices');
-        $em->getConnection()->executeStatement('TRUNCATE TABLE transactions');
-        $em->getConnection()->executeStatement('TRUNCATE TABLE orders');
-        $em->getConnection()->executeStatement('TRUNCATE TABLE projects');
+        $this->truncate($this->entityManager,'invoices');
+        $this->truncate($this->entityManager,'transactions');
+        $this->truncate($this->entityManager,'orders');
 
 
-        $em->getConnection()->beginTransaction();
+        $status = $this->entityManager->find(Status::class, 1);
+        $user = $this->entityManager->find(User::class, 1);
+        $project = $this->entityManager->find(Project::class, 1);
 
+
+
+        $this->entityManager->getConnection()->beginTransaction();
         try {
 
-            $user = new User();
-            $user->setName('maziar');
-            $user->setFamily('dehqani');
-            $user->setIsPrivateInvestor(true);
-            $user->setMobile('09931591988');
-            $user->setEmail('maziar@gmail.com');
-            $user->setType(UserTypes::REAL);
-            $user->setIsSejami(true);
-            $user->setStatusId(1);
-            $user->setBio('test');
-            $user->setPassword(242345234523);
-
-
-            $project = new Project();
-            $project->setTitle('tset projcet');
-
-            for ($i = 0; $i < 100; $i++  ) {
+            for ($i = 0; $i < 5; $i++  ) {
                 $order = new Order();
                 $order->setUser($user);
                 $order->setProject($project);
 
 
                 $transaction = new Transaction();
-                $transaction->setStatus(TransactionStatuses::PAID);
-                $transaction->setAmount(1000);
-                $transaction->setRrn('35325');
-                $transaction->setSecurePan(3523456456);
-                $transaction->setTerminalId(3452534);
+                $transaction->setStatus($status);
+                $transaction->setAmount(fake()->numberBetween(1, 999999));
+                $transaction->setRrn(fake()->numberBetween(1, 999999));
+                $transaction->setSecurePan(fake()->numberBetween(1,999999));
+                $transaction->setTerminalId(fake()->numberBetween(1, 999999));
                 $transaction->setGateway(GateWays::ONLINE);
-                $transaction->setTraceNumber('5234562');
-                $transaction->setToken('5234562456');
+                $transaction->setTraceNumber(fake()->numberBetween(1, 999999));
+                $transaction->setToken(fake()->numberBetween(1, 999999));
                 $transaction->setOrder($order);
 
 
 
                 $invoice = new Invoice();
-                $invoice->setTraceCode('45252345');
-                $invoice->setTermConditionAccepted(true);
+                $invoice->setTraceCode(fake()->shuffleString());
+                $invoice->setTermConditionAccepted(fake()->boolean());
                 $invoice->setTransaction($transaction);
 
+                for ($i = 0; $i < 4; $i++  ) {
+                    $installment = new Installment();
+                    $installment->setInvoice($invoice);
+                    $installment->setAmount(fake()->numberBetween(1, 999999));
+                    $installment->setDescription(fake()->text());
+                    $installment->setDueDate(fake()->dateTime());
+                    $installment->setStatus($status);
+                    $this->entityManager->persist($installment);
+                }
 
-                $installment = new Installment();
-                $installment->setInvoice($invoice);
-                $installment->setAmount(1000);
-                $installment->setDescription('test');
-                $installment->setDueDate(Carbon::now());
-                $installment->setStatus(TransactionStatuses::PAID);
 
-                $em->persist($order);
-                $em->persist($transaction);
-                $em->persist($invoice);
-                $em->persist($installment);
+                $this->entityManager->persist($order);
+                $this->entityManager->persist($transaction);
+                $this->entityManager->persist($invoice);
             }
 
-            $em->persist($user);
-            $em->persist($project);
-
-            $em->flush();
-
-            $em->getConnection()->commit();
+            $this->entityManager->flush();
+            $this->entityManager->getConnection()->commit();
 
 
         }catch (\Exception $e){
@@ -108,9 +100,6 @@ class InvoiceSeeder extends Seeder
             dd($e->getMessage());
         }
 
-
-
-        $em->getConnection()->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
 
 
     }

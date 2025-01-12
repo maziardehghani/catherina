@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             StatusesSeeder::class,
             UsersSeeder::class,
             ProjectSeeder::class,
+            InvoiceSeeder::class,
 //            UserInfosTitleSeeder::class,
 //            UserInfosValueSeeder::class,
 //            PermissionSeeder::class,

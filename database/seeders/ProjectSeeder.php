@@ -28,8 +28,8 @@ class ProjectSeeder extends Seeder
 
 
         $city = $this->entityManager->find(City::class, 1);
-        $status = $this->entityManager->find(Status::class, 1);
         $warranty = $this->entityManager->find(Warranty::class, 1);
+        $status = $this->entityManager->find(Status::class, 1);
         $user = $this->entityManager->find(User::class, 1);
 
 
