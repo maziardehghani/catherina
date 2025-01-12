@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+
 use App\Entities\Installment;
 use App\Entities\Invoice;
 use App\Entities\Order;
@@ -10,13 +11,8 @@ use App\Entities\Status;
 use App\Entities\Transaction;
 use App\Entities\User;
 use App\Enums\GateWays;
-use App\Enums\Statuses;
-use App\Enums\TransactionStatuses;
-use App\Enums\UserTypes;
 use App\Traits\DbTruncater;
-use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 
@@ -40,6 +36,7 @@ class InvoiceSeeder extends Seeder
         $this->truncate($this->entityManager,'invoices');
         $this->truncate($this->entityManager,'transactions');
         $this->truncate($this->entityManager,'orders');
+        $this->truncate($this->entityManager,'installments');
 
 
         $status = $this->entityManager->find(Status::class, 1);
@@ -51,7 +48,7 @@ class InvoiceSeeder extends Seeder
         $this->entityManager->getConnection()->beginTransaction();
         try {
 
-            for ($i = 0; $i < 5; $i++  ) {
+            for ($i = 0; $i < 10; $i++  ) {
                 $order = new Order();
                 $order->setUser($user);
                 $order->setProject($project);
@@ -75,16 +72,16 @@ class InvoiceSeeder extends Seeder
                 $invoice->setTermConditionAccepted(fake()->boolean());
                 $invoice->setTransaction($transaction);
 
-                for ($i = 0; $i < 4; $i++  ) {
-                    $installment = new Installment();
-                    $installment->setInvoice($invoice);
-                    $installment->setAmount(fake()->numberBetween(1, 999999));
-                    $installment->setDescription(fake()->text());
-                    $installment->setDueDate(fake()->dateTime());
-                    $installment->setStatus($status);
-                    $this->entityManager->persist($installment);
-                }
-
+//                for ($i = 0; $i < 4; $i++  ) {
+//                    $installment = new Installment();
+//                    $installment->setInvoice($invoice);
+//                    $installment->setAmount(fake()->numberBetween(1, 999999));
+//                    $installment->setDescription(fake()->text());
+//                    $installment->setDueDate(fake()->dateTime());
+//                    $installment->setStatus($status);
+//                    $this->entityManager->persist($installment);
+//
+//                }
 
                 $this->entityManager->persist($order);
                 $this->entityManager->persist($transaction);
@@ -104,3 +101,9 @@ class InvoiceSeeder extends Seeder
 
     }
 }
+
+//
+//
+
+
+
