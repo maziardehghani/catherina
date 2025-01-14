@@ -35,20 +35,10 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProjectController extends Controller
 {
-    public object $projectRepo;
-    public object $userRepo;
-    public object $cityRepo;
-    public object $projectUserExpertsRepo;
-    public object $mediaRepo;
-
-    public function __construct()
-    {
-        $this->userRepo = new UserRepository();
-        $this->projectRepo = new ProjectRepository();
-        $this->cityRepo = new CityRepository();
-        $this->projectUserExpertsRepo = new ProjectUserExpertsRepository();
-        $this->mediaRepo = new MediaRepository();
-    }
+    public function __construct(
+        private ProjectRepository $projectRepository,
+    )
+    {}
 
     /**
      * @param Request $request filtering params from query strings
@@ -57,14 +47,14 @@ class ProjectController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $projects = Project::with(['experts'])
-            ->search($request->search, ['title'])
-            ->whereStatus($request->status)
-            ->whereRegisterAt($request->register_at)
-            ->latest()
-            ->paginate();
+        $projects = $this->projectRepository->paginate($request->page ?? 1);
 
-        return response()->success(ProjectResource::collection($projects), 'اطلاعات با موفقیت دریافت شد');
+        return response()->success([
+            'data' => ProjectResource::collection($projects['data']),
+            'total' => $projects['total'],
+            'current_page' => $projects['current_page'],
+            'per_page' => $projects['per_page'],
+        ], 'اطلاعات با موفقیت دریافت شد');
     }
 
     public function show(Project $project): JsonResponse

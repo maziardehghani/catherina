@@ -8,9 +8,29 @@ use App\Entities\User;
 use App\Enums\Statuses;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ProjectRepository extends EntityRepository
 {
+    private $limit = 20;
+    public function paginate($page = 1)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setFirstResult(($page - 1) * $this->limit)
+            ->setMaxResults($this->limit);
+
+        $paginator = new Paginator($queryBuilder->getQuery(), true);
+
+
+        return [
+            'data' => iterator_to_array($paginator),
+            'current_page' => $page,
+            'per_page' => $this->limit,
+            'total' => $paginator->count(),
+        ];
+    }
+
     public function getCountProjectOfUser(User $user)
     {
         return $this->createQueryBuilder('p')
