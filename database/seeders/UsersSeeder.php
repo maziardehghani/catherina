@@ -15,8 +15,7 @@ class UsersSeeder extends Seeder
 
     public function __construct(
         public EntityManagerInterface $entityManager
-    ) {
-    }
+    ) {}
 
     /**
      * Run the database seeds.

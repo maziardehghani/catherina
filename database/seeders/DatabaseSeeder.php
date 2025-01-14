@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             ProjectUserExpertSeeder::class,
             ProtestSeeder::class,
             PermissionSeeder::class,
+            UserInfosTitleSeeder::class,
+            UserInfosValueSeeder::class,
         ]);
     }
 }

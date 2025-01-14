@@ -2,12 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\UserInfoTitle;
+
+use App\Entities\UsersInfosTitles;
+use App\Traits\DbTruncater;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserInfosTitleSeeder extends Seeder
 {
+    use DbTruncater;
+    public function __construct(
+        public EntityManagerInterface $entityManager
+    ){}
+
     /**
      * Run the database seeds.
      */
@@ -40,10 +48,11 @@ class UserInfosTitleSeeder extends Seeder
         $titles = collect($this->titles);
 
         $titles->map(function ($title){
-            UserInfoTitle::query()->create([
-                'title' => $title,
-            ]);
+            $userTitle = new UsersInfosTitles();
+            $userTitle->setTitle($title);
+            $this->entityManager->persist($userTitle);
         });
+        $this->entityManager->flush();
 
     }
 }

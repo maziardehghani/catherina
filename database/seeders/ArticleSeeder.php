@@ -31,8 +31,8 @@ class ArticleSeeder extends Seeder
             $article->setUser($user);
             $article->setTitle(fake()->title());
             $article->setSlug(fake()->slug());
-            $article->setIntro(fake()->paragraph());
-            $article->setContent(fake()->paragraph());
+            $article->setIntro(fake()->text());
+            $article->setContent(fake()->text());
             $article->setStatus($status);
             $this->entityManager->persist($article);
         }

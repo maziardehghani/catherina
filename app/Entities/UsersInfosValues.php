@@ -25,7 +25,7 @@ class UsersInfosValues
     private ?User $user = null;
 
 
-    #[ORM\OneToOne(targetEntity: UsersInfosTitles::class, inversedBy: 'usersInfosValues')]
+    #[ORM\ManyToOne(targetEntity: UsersInfosTitles::class, inversedBy: 'usersInfosValues')]
     #[ORM\JoinColumn(name: 'user_info_title_id', referencedColumnName: 'id', nullable: false)]
     private UsersInfosTitles $usersInfosTitles ;
 
