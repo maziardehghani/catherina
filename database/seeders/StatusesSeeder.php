@@ -24,7 +24,7 @@ class StatusesSeeder extends Seeder
 
         $this->truncate($this->entityManager, 'statuses');
 
-        collect(Statuses::commonStatuses())->map(function ($item) {
+        collect(Statuses::statuses())->map(function ($item) {
             $status = new Status();
             $status->setTitle($item);
             $status->setModel(User::class);

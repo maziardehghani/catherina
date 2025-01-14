@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             ContractSeeder::class,
             CoworkerSeeder::class,
+            ProjectUserExpertSeeder::class
         ]);
     }
 }
