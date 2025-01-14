@@ -28,6 +28,18 @@ class Status
     private string $title;
 
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+
     // Getter and Setter for $model
     public function getModel(): string
     {

@@ -3,8 +3,10 @@
 namespace App\Repositories\Project;
 
 
+use App\Entities\Status;
 use App\Entities\User;
-use App\Enums\TransactionStatuses;
+use App\Enums\Statuses;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
 class ProjectRepository extends EntityRepository
@@ -17,11 +19,24 @@ class ProjectRepository extends EntityRepository
             ->join('o.transaction', 't')
             ->where('t.status = :status')
             ->andWhere('o.user = :userId')
-            ->setParameter('status', 'paid')
+            ->setParameter('status', $this->getStatusByTitle(Statuses::PAID)->getId())
             ->setParameter('userId', $user->getId())
             ->getQuery()
             ->getSingleScalarResult();
 
+    }
+
+    public function getStatusByTitle(Statuses $title)
+    {
+        return resolve(EntityManagerInterface::class)->createQueryBuilder()
+            ->select('s')
+            ->from(Status::class, 's')
+            ->where('s.title = :status')
+            ->andWhere('s.model = :model')
+            ->setParameter('status', $title)
+            ->setParameter('model', 'App\Entities\Transaction')
+            ->getQuery()
+            ->getSingleResult();
     }
 }
 

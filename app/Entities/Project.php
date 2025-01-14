@@ -6,6 +6,7 @@ namespace App\Entities;
 use App\Repositories\Project\ProjectRepository;
 use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,6 +28,9 @@ class Project
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'user_id')]
     private User $user;
 
+
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'project')]
+    private Collection $orders;
 
     #[ORM\ManyToOne(targetEntity: Warranty::class, inversedBy: 'warranty_id')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'warranty_id')]
