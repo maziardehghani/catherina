@@ -32,7 +32,6 @@ class ProjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        Log::error($this);
         return [
             'title' => [
                 Rule::requiredIf($this->routeIs('admin.projects.storeSpecifications')),
@@ -104,7 +103,7 @@ class ProjectRequest extends FormRequest
             ],
             'trace_code' => [
                 Rule::requiredIf($this->routeIs('admin.projects.getFarabourseProject')),
-                Rule::unique('farabourseProjects', 'trace_code')->ignore($this->project?->farabourse?->id),
+                Rule::unique('farabourseProjects', 'trace_code')->ignore($this->project?->getFarabourseProject()?->getId()),
                 'string'
             ]
         ];

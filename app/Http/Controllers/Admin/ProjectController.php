@@ -80,40 +80,10 @@ class ProjectController extends Controller
      *
      *
      */
-    public function updateProjectInformation(ProjectRequest $request, Project $project): JsonResponse
-    {
-        $this->projectRepository->update($project, $request->validated());
-
-        return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
-    }
-
-
-    /**
-     * @param ProjectRequest $request
-     * @param Project $project
-     * @return JsonResponse containing error or success details
-     *
-     *
-     */
-    public function updateFinancialInformation(ProjectRequest $request, Project $project): JsonResponse
-    {
-        $this->projectRepository->update($project, $request->validated());
-
-        return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
-    }
-
-
-    /**
-     * @param ProjectRequest $request
-     * @param Project $project
-     * @return JsonResponse containing error or success details
-     *
-     *
-     */
     public function updateStatus(ProjectRequest $request, Project $project): JsonResponse
     {
-        $this->projectRepository->update($project, $request->validated());
-        return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
+        $this->projectRepository->updateStatus($project, $request->validated());
+        return response()->success($project->getId(), 'اطلاعات با موفقیت دریافت شد');
     }
 
 

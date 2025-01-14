@@ -77,6 +77,14 @@ class ProjectRepository extends EntityRepository
 
 
     }
+
+
+    public function updateStatus(Project $project, $data)
+    {
+        $project->setStatus($data['status_id']);
+        $this->getEntityManager()->persist($project);
+        $this->getEntityManager()->flush();
+    }
 }
 
 
