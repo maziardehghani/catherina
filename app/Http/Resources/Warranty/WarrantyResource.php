@@ -15,8 +15,8 @@ class WarrantyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'value' => $this->id,
-            'name' => $this->title,
+            'value' => $this->getId(),
+            'name' => $this->getTitle(),
         ];
     }
 }

@@ -17,7 +17,7 @@ class UserInstallmentResource extends JsonResource
     {
         return [
             'amount' => number_format($this->getAmount()),
-            'status' => $this->getStatus(),
+            'status' => $this->getStatus()?->getTitle(),
             'description' => $this->getDescription(),
             'due_date' => CalendarService::getPersianDate($this->getDueDate(),'Y-m-d')
         ];
