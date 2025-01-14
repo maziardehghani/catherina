@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Project;
 use App\Enums\ProjectMembersType;
 use App\Events\FarabourseDataEvent;
 use App\Http\Controllers\Controller;
@@ -14,24 +15,12 @@ use App\Http\Resources\ProjectListResource;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectStatusLogResources;
 use App\Http\Resources\ProjectUserExpertsResource;
-use App\Http\Resources\User\UserResource;
-use App\Models\FarabourseProject;
-use App\Models\Media;
-use App\Models\Project;
-use App\Models\ProjectMembersInfo;
-use App\Models\ProjectUserExpert;
-use App\Repositories\City\CityRepository;
-use App\Repositories\Media\MediaRepository;
 use App\Repositories\Project\ProjectRepository;
-use App\Repositories\ProjectsUserExperts\ProjectUserExpertsRepository;
-use App\Repositories\User\UserRepository;
 use App\Services\FarabourseServices\FarabourseService;
-use App\Services\MediaServices\MediaService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProjectController extends Controller
 {
@@ -59,7 +48,7 @@ class ProjectController extends Controller
 
     public function show(Project $project): JsonResponse
     {
-        return response()->success(new ProjectResource($project->load(['experts','city','state','user'])), 'اطلاعات با موفقیت دریافت شد');
+        return response()->success(new ProjectResource($project), 'اطلاعات با موفقیت دریافت شد');
     }
 
 
