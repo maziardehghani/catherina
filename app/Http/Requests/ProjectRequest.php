@@ -42,22 +42,22 @@ class ProjectRequest extends FormRequest
             'slug' => [
                 'nullable',
                 'string',
-                Rule::unique(Project::class, 'slug')->ignore($this->project_id)
+                Rule::unique('projects', 'slug')->ignore($this->project_id)
             ],
             'user_id' => [
                 Rule::requiredIf($this->routeIs('admin.projects.storeSpecifications')),
                 'integer',
-                Rule::exists(User::class, 'id')
+                Rule::exists('users', 'id')
             ],
             'city_id' => [
                 Rule::requiredIf($this->routeIs('admin.projects.storeSpecifications')),
                 'integer',
-                Rule::exists(City::class, 'id')
+                Rule::exists('cities', 'id')
             ],
             'project_id' => [
                 'nullable',
                 'integer',
-                Rule::exists(Project::class, 'id')
+                Rule::exists('projects', 'id')
             ],
             'project_intro' => [
                 Rule::requiredIf($this->routeIs('admin.projects.projectInformation')),
@@ -90,7 +90,7 @@ class ProjectRequest extends FormRequest
             'warranty_inquiry_id' => [
                 Rule::requiredIf($this->routeIs('admin.projects.financialInformation')),
                 'integer',
-                Rule::exists(Warranty::class, 'id')
+                Rule::exists('warranties', 'id')
             ],
             'warranty_details' => [
                 Rule::requiredIf($this->routeIs('admin.projects.financialInformation')),
@@ -100,11 +100,11 @@ class ProjectRequest extends FormRequest
             'status_id'=>[
                 Rule::requiredIf($this->routeIs('admin.projects.status')),
                 'integer',
-                Rule::exists(Status::class, 'id'),
+                Rule::exists('statuses', 'id'),
             ],
             'trace_code' => [
                 Rule::requiredIf($this->routeIs('admin.projects.getFarabourseProject')),
-                Rule::unique(FarabourseProject::class, 'trace_code')->ignore($this->project?->farabourse?->id),
+                Rule::unique('farabourseProjects', 'trace_code')->ignore($this->project?->farabourse?->id),
                 'string'
             ]
         ];

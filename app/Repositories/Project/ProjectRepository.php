@@ -3,6 +3,7 @@
 namespace App\Repositories\Project;
 
 
+use App\Entities\Project;
 use App\Entities\Status;
 use App\Entities\User;
 use App\Enums\Statuses;
@@ -13,6 +14,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class ProjectRepository extends EntityRepository
 {
     private $limit = 20;
+
     public function paginate($page = 1)
     {
         $queryBuilder = $this->createQueryBuilder('p')
@@ -57,6 +59,23 @@ class ProjectRepository extends EntityRepository
             ->setParameter('model', 'App\Entities\Transaction')
             ->getQuery()
             ->getSingleResult();
+    }
+
+    public function store($data)
+    {
+        $project = new Project();
+
+        $project->setTitle($data['title']);
+        $project->setSlug($data['slug']);
+        $project->setUser($data['user_id']);
+        $project->setCity($data['city_id']);
+        $project->setStatus($data['status_id']);
+
+        $this->getEntityManager()->persist($project);
+        $this->getEntityManager()->flush();
+        return $project;
+
+
     }
 }
 

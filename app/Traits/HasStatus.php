@@ -4,6 +4,7 @@ namespace App\Traits;
 
 
 use App\Entities\Status;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -18,8 +19,11 @@ trait HasStatus
         return $this->status;
     }
 
-    public function setStatus(Status $status): self
+    public function setStatus(int|Status $status): self
     {
+        if (is_int($status)) {
+            $status = resolve(EntityManagerInterface::class)->find(Status::class, $status);
+        }
         $this->status = $status;
         return $this;
     }

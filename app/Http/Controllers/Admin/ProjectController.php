@@ -68,9 +68,9 @@ class ProjectController extends Controller
 
     public function storeSpecifications(ProjectRequest $request): JsonResponse
     {
-        $project = $this->projectRepo->updateOrStore($request->validated());
+        $project = $this->projectRepository->store($request->validated());
 
-        return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
+        return response()->success($project->getId(), 'اطلاعات با موفقیت دریافت شد');
     }
 
     /**
@@ -82,7 +82,7 @@ class ProjectController extends Controller
      */
     public function updateProjectInformation(ProjectRequest $request, Project $project): JsonResponse
     {
-        $this->projectRepo->update($project, $request->validated());
+        $this->projectRepository->update($project, $request->validated());
 
         return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
     }
@@ -97,7 +97,7 @@ class ProjectController extends Controller
      */
     public function updateFinancialInformation(ProjectRequest $request, Project $project): JsonResponse
     {
-        $this->projectRepo->update($project, $request->validated());
+        $this->projectRepository->update($project, $request->validated());
 
         return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
     }
@@ -112,7 +112,7 @@ class ProjectController extends Controller
      */
     public function updateStatus(ProjectRequest $request, Project $project): JsonResponse
     {
-        $this->projectRepo->update($project, $request->validated());
+        $this->projectRepository->update($project, $request->validated());
         return response()->success($project->id, 'اطلاعات با موفقیت دریافت شد');
     }
 
@@ -120,7 +120,7 @@ class ProjectController extends Controller
     public function updateFarabourseCode(Project $project, ProjectRequest $request): JsonResponse
     {
 
-        $this->projectRepo->updateFarabourseCode($project, $request->validated());
+        $this->projectRepository->updateFarabourseCode($project, $request->validated());
 
 
         event(new FarabourseDataEvent($project->id, $request->trace_code));
@@ -257,7 +257,7 @@ class ProjectController extends Controller
      */
     public function delete(Project $project): JsonResponse
     {
-        $this->projectRepo->delete($project);
+        $this->projectRepository->delete($project);
 
         return response()->success(null, 'اطلاعات با موفقیت حذف شد');
     }
@@ -315,14 +315,14 @@ class ProjectController extends Controller
 
     public function financeFiles(Project $project): JsonResponse
     {
-        $medias = $this->projectRepo->getFinanceFiles($project);
+        $medias = $this->projectRepository->getFinanceFiles($project);
 
         return response()->success(MediaResource::collection($medias));
     }
 
     public function projectInvestors(Project $project): JsonResponse
     {
-        $invoices = $this->projectRepo->getInvoicesOfProject($project);
+        $invoices = $this->projectRepository->getInvoicesOfProject($project);
 
         return response()->success(ProjectInvestorsResources::collection($invoices));
     }
@@ -367,7 +367,7 @@ class ProjectController extends Controller
 
     public function participation(Project $project): JsonResponse
     {
-        $this->projectRepo->toggleParticipation($project);
+        $this->projectRepository->toggleParticipation($project);
 
         return response()->success([]);
     }

@@ -3,7 +3,9 @@
 namespace App\Entities;
 
 
+use App\Repositories\City\CityRepository;
 use App\Repositories\Project\ProjectRepository;
+use App\Repositories\User\UserRepository;
 use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
 use Doctrine\Common\Collections\Collection;
@@ -33,7 +35,7 @@ class Project
     private Collection $orders;
 
     #[ORM\ManyToOne(targetEntity: Warranty::class, inversedBy: 'warranty_id')]
-    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'warranty_id')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, fieldName: 'warranty_id')]
     private Warranty $warranty;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
@@ -46,10 +48,10 @@ class Project
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'city_id')]
     private City $city;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[ORM\Column(type: Types::DECIMAL, nullable: true,  precision: 5, scale: 2)]
     private ?float $percent = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $fundingPeriod = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -122,8 +124,11 @@ class Project
         return $this->city;
     }
 
-    public function setCity(City $city): self
+    public function setCity(int|City $city): self
     {
+        if (is_int($city)) {
+            $city = resolve(CityRepository::class)->find($city);
+        }
         $this->city = $city;
         return $this;
     }
@@ -241,8 +246,12 @@ class Project
         return $this;
     }
 
-    public function setUser(User $user): self
+    public function setUser(int|User $user): self
     {
+        if(is_int($user)){
+            $user = resolve(UserRepository::class)->find($user);
+        }
+
         $this->user = $user;
         return $this;
     }

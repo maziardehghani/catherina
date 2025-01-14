@@ -3,15 +3,13 @@
 namespace App\Entities;
 
 
-use App\Repositories\Project\ProjectRepository;
+use App\Repositories\City\CityRepository;
 use App\Traits\HasTimeStamp;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
-
-#[ORM\Entity]
 #[ORM\Table(name: 'cities')]
+#[ORM\Entity(repositoryClass: CityRepository::class)]
 class City
 {
     use HasTimeStamp;
@@ -28,7 +26,6 @@ class City
     #[ORM\ManyToOne(targetEntity: State::class, inversedBy: 'cities')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'state_id')]
     private State $state;
-
 
 
     public function getId(): ?int

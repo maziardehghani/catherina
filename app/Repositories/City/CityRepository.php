@@ -2,14 +2,9 @@
 
 namespace App\Repositories\City;
 
-use App\Models\City;
-use App\Repositories\Repository;
+use Doctrine\ORM\EntityRepository;
 
-class CityRepository extends Repository
+class CityRepository extends EntityRepository
 {
-    public function __construct()
-    {
-        $this->model = City::query();
-        $this->paginate = 20;
-    }
+
 }
