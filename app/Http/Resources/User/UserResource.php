@@ -13,15 +13,12 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->getId(),
-//            'avatar' => $this->getMediasUrl(),
             'user_name' => $this->getUserName(),
             'name' => $this->getName(),
             'family' => $this->getFamily(),
             'email' => $this->getEmail(),
             'mobile' => $this->getMobile(),
-//            'status' => $this->getStatusTitle(),
-            'status_id' => $this->getStatusId(),
-//            'persian_type' => $this->getPersianType(),
+            'status_id' => $this->getStatus()->getTitle(),
             'type' => $this->getType()->value,
             'bio' => $this->getBio(),
             'is_private_investor' => $this->getIsPrivateInvestor(),

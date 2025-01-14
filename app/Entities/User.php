@@ -18,7 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class User
 {
-    use HasTimeStamp,HasStatus;
+    use HasStatus,HasTimeStamp;
 
 
     #[ORM\Id]
