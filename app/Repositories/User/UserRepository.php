@@ -2,6 +2,7 @@
 
 namespace App\Repositories\User;
 
+use App\Entities\ProjectExperts;
 use App\Entities\User;
 use App\Entities\UsersInfosTitles;
 use App\Entities\UsersInfosValues;
@@ -166,40 +167,14 @@ class UserRepository extends EntityRepository
         $entityManager->remove($user);
         $entityManager->flush();
     }
+
+    public function getExpertUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->join(ProjectExperts::class,
+                'uExp',
+                'u.id = uExp.user_id')
+            ->getQuery()
+            ->getResult();
+    }
 }
-
-
-
-//public function storeSejamInfos($data, $user): void
-//{
-//    foreach ($data as $key => $item) {
-//
-//        $userInfoTitle = UserInfoTitle::query()->where('title', $key)->first();
-//
-//        // refuse to insert sejam data if it is null
-//        if (is_null($userInfoTitle) || is_null($item)) {
-//            continue;
-//        }
-//
-//        $this->storeUserValues($user, $userInfoTitle, $item);
-//
-//    }
-//
-//}
-//
-
-//
-//
-//private function storeUserValues($user, $userInfoTitle, $item): void
-//{
-//    UserInfoValue::query()->updateOrCreate([
-//        'user_id' => $user->id,
-//        'user_info_title_id' => $userInfoTitle->id,
-//    ], [
-//        'user_id' => $user->id,
-//        'user_info_title_id' => $userInfoTitle->id,
-//        'value' => $item,
-//    ]);
-//}
-
-

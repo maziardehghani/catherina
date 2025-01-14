@@ -261,16 +261,8 @@ class UserController extends Controller
 
     public function experts(): JsonResponse
     {
-        $userExperts = $this->userRepo->getExpertUsers();
+        $userExperts = $this->userRepository->getExpertUsers();
 
         return response()->success(ExpertResources::collection($userExperts), 'اطلاعات با موفقیت دریافت شد');
-    }
-
-
-    public function usersList(): JsonResponse
-    {
-        $users = User::with(['status', 'medias'])->get();
-
-        return response()->success(UserListResource::collection($users), 'اطلاعات با موفقیت دریافت شد');
     }
 }

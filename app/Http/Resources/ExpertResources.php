@@ -15,9 +15,8 @@ class ExpertResources extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'user_name' => $this->userName,
-            'avatar' => $this->mediasUrl,
+            'id' => $this->getId(),
+            'user_name' => $this->getUserName(),
         ];
     }
 }

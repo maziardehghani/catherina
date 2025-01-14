@@ -342,21 +342,6 @@ class User
         return $this->getIsSejami() ? 'سجامی' : 'ندارد';
     }
 
-//    public function getPersianStatus()
-//    {
-//        return $this->getStatusId()?->persianTitle);
-//    }
-
-//    public function getPersianType()
-//    {
-//        return self::$persianTypes[$this->type]);
-//    }
-
-//    public function getMediasUrl()
-//    {
-//        return $this->medias?->url;
-//    }
-
     public function getUserName()
     {
         return $this->getType() == 'real' ? $this->getName() . ' ' . $this->getFamily() : $this->getCompanyName();
