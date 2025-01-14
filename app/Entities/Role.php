@@ -20,6 +20,11 @@ class Role
     #[ORM\Column(type: "string", length: 255)]
     private string $name;
 
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "roles")]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, fieldName: 'user_id')]
+    private User $user;
+
     #[ORM\ManyToMany(targetEntity: Permission::class, inversedBy: "roles")]
     #[ORM\JoinTable(name: "role_permissions")]
     private Collection $permissions;
@@ -61,6 +66,12 @@ class Role
     public function removePermission(Permission $permission): self
     {
         $this->permissions->removeElement($permission);
+        return $this;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
         return $this;
     }
 }

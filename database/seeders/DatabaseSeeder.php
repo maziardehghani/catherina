@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CoworkerSeeder::class,
             ProjectUserExpertSeeder::class,
             ProtestSeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }

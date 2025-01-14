@@ -2,37 +2,61 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Statuses;
-use App\Models\Status;
-use App\Models\User;
+use App\Entities\Permission;
+use App\Entities\Role;
+use App\Entities\Status;
+use App\Entities\User;
+use App\Enums\UserTypes;
+
+use App\Traits\DbTruncater;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
+    use DbTruncater;
+
+    public function __construct(
+        public EntityManagerInterface $entityManager
+    ){}
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $user = User::query()->create([
-            'name' => 'maziar',
-            'family' => 'dehghani',
-            'mobile' => '09931591988',
-            'status_id' => Status::query()->whereTitle(fake()->randomElement(Statuses::commonStatuses()))->first()->id,
-            'type' => 'real',
-            'is_sejami' => 1,
-            'is_private_investor' => 0,
-            'email' => 'maziar@gmail.com',
-            'password' => Hash::make(123456789),
+        $status = $this->entityManager->find(Status::class, 1);
 
-        ]);
+        $user = new User();
+        $user->setName('maziar');
+        $user->setFamily('dehghani');
+        $user->setEmail('maziar@gmail.com');
+        $user->setMobile('09931591988');
+        $user->setIsSejami(true);
+        $user->setIsPrivateInvestor(true);
+        $user->setStatus($status);
+        $user->setBio('laravel developer');
+        $user->setType(UserTypes::REAL);
+        $user->setPassword(Hash::make(123456789));
 
-        $permission = Permission::query()->create([
-            'name' => 'management',
-        ]);
+        $this->entityManager->persist($user);
 
-        $user->givePermissionTo($permission);
+
+
+        $permission = new Permission();
+        $permission->setName('management');
+        $this->entityManager->persist($permission);
+
+
+        $role = new Role();
+        $role->setName('super-admin');
+        $role->addPermission($permission);
+
+        $role->setUser($user);
+        $this->entityManager->persist($role);
+
+        $this->entityManager->flush();
+        $this->entityManager->clear();
     }
 }
