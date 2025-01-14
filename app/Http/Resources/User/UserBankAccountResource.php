@@ -15,11 +15,11 @@ class UserBankAccountResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'account_number' => $this->accountNumber,
-            'bank_name' => $this->bankName,
-            'sheba' => $this->sheba,
-            'account_type' => $this->accountType
+            'id' => $this->getId(),
+            'account_number' => $this->getAccountNumber(),
+            'bank_name' => $this->getBankName(),
+            'sheba' => $this->getSheba(),
+            'account_type' => $this->getAccountType()
         ];
     }
 }
