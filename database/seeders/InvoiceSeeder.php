@@ -38,7 +38,6 @@ class InvoiceSeeder extends Seeder
         $this->truncate($this->entityManager,'orders');
 
 
-        $status = $this->entityManager->find(Status::class, 1);
         $user = $this->entityManager->find(User::class, 1);
         $project = $this->entityManager->find(Project::class, 1);
 
@@ -47,7 +46,12 @@ class InvoiceSeeder extends Seeder
         $this->entityManager->getConnection()->beginTransaction();
         try {
 
+
             for ($i = 0; $i < 10; $i++  ) {
+
+                $status = $this->entityManager->find(Status::class, fake()->numberBetween(3,7));
+
+
                 $order = new Order();
                 $order->setUser($user);
                 $order->setProject($project);

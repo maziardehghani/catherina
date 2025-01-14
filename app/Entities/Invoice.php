@@ -74,9 +74,9 @@ class Invoice
     }
 
 
-    public function getTermConditionAccepted(): bool
+    public function getTermConditionsAccepted(): bool
     {
-        return $this->termConditionAccepted;
+        return $this->termConditionsAccepted;
     }
 
 

@@ -18,7 +18,7 @@ class UserTransactionResource extends JsonResource
         return [
             'id' => $this->getId(),
             'amount' => $this->getAmount(),
-            'status' => $this->getStatus(),
+            'status' => $this->getStatus()?->getTitle(),
             'terminal_id' => $this->getTerminalId(),
             'trace_number' => $this->getTraceNumber(),
             'rrn' => $this->getRrn(),
