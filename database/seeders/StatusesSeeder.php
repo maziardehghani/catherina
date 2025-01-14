@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Entities\Installment;
+use App\Entities\Project;
 use App\Entities\Status;
+use App\Entities\Transaction;
 use App\Entities\User;
 use App\Enums\Statuses;
 use App\Traits\DbTruncater;
@@ -24,7 +27,7 @@ class StatusesSeeder extends Seeder
 
         $this->truncate($this->entityManager, 'statuses');
 
-        collect(Statuses::statuses())->map(function ($item) {
+        collect(Statuses::commonStatuses())->map(function ($item) {
             $status = new Status();
             $status->setTitle($item);
             $status->setModel(User::class);
@@ -32,6 +35,39 @@ class StatusesSeeder extends Seeder
             $this->entityManager->flush();
 
         });
+
+        collect(Statuses::TransactionStatuses())->map(function ($item) {
+            $status = new Status();
+            $status->setTitle($item);
+            $status->setModel(Transaction::class);
+            $this->entityManager->persist($status);
+            $this->entityManager->flush();
+
+        });
+
+
+
+        collect(Statuses::ProjectStatuses())->map(function ($item) {
+            $status = new Status();
+            $status->setTitle($item);
+            $status->setModel(Project::class);
+            $this->entityManager->persist($status);
+            $this->entityManager->flush();
+
+        });
+
+
+        collect(Statuses::InstallmentStatuses())->map(function ($item) {
+            $status = new Status();
+            $status->setTitle($item);
+            $status->setModel(Installment::class);
+            $this->entityManager->persist($status);
+            $this->entityManager->flush();
+
+        });
+
+
+
 
 
     }

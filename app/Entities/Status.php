@@ -24,7 +24,7 @@ class Status
     #[ORM\Column(type: 'string', length: 255,)]
     private string $model;
 
-    #[ORM\Column(type: 'string', unique: true)]
+    #[ORM\Column(type: 'string')]
     private string $title;
 
 

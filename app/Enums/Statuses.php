@@ -104,7 +104,7 @@ enum Statuses: string
         ];
     }
 
-    static function installmentStatuses()
+    static function InstallmentStatuses()
     {
         return [
             self::PAID->value,
