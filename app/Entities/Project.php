@@ -230,12 +230,53 @@ class Project
         return $this->user;
     }
 
+    public function getFarabourseProject(): ?FarabourseProject
+    {
+        return $this->farabourseProject;
+    }
+
+    public function setFarabourseProject(FarabourseProject $farabourseProject): self
+    {
+        $this->farabourseProject = $farabourseProject;
+        return $this;
+    }
+
     public function setUser(User $user): self
     {
         $this->user = $user;
         return $this;
     }
 
+    public function getFarabourseTotalAmounts()
+    {
+        return $this->farabourseProject->getTotalAmounts();
+    }
+
+    public function getMinimumAmount()
+    {
+        return $this->farabourseProject->getMinimumRequirePrice();
+    }
+
+    public function getRealPersonMinimAmount()
+    {
+        return $this->farabourseProject->getRealPersonMinimumAvailablePrice();
+    }
+
+    public function getRealPersonMaximAmount()
+    {
+        return $this->farabourseProject->getRealPersonMaximumAvailablePrice();
+    }
+
+    public function getLegalPersonMinimAmount()
+    {
+        return $this->farabourseProject->getLegalPersonMinimumAvailablePrice();
+    }
+
+
+    public function getLegalPersonMaximAmount()
+    {
+        return $this->farabourseProject->getLegalPersonMaximumAvailablePrice();
+    }
 
 
 }
