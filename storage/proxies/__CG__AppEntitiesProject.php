@@ -22,7 +22,7 @@ class Project extends \App\Entities\Project implements \Doctrine\ORM\Proxy\Inter
     
 
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'cityId' => [parent::class, 'cityId', null],
+        "\0".parent::class."\0".'city' => [parent::class, 'city', null],
         "\0".parent::class."\0".'companyIntro' => [parent::class, 'companyIntro', null],
         "\0".parent::class."\0".'createdAt' => [parent::class, 'createdAt', null],
         "\0".parent::class."\0".'expertOpinion' => [parent::class, 'expertOpinion', null],
@@ -40,7 +40,7 @@ class Project extends \App\Entities\Project implements \Doctrine\ORM\Proxy\Inter
         "\0".parent::class."\0".'user' => [parent::class, 'user', null],
         "\0".parent::class."\0".'warranty' => [parent::class, 'warranty', null],
         "\0".parent::class."\0".'warrantyDetails' => [parent::class, 'warrantyDetails', null],
-        'cityId' => [parent::class, 'cityId', null],
+        'city' => [parent::class, 'city', null],
         'companyIntro' => [parent::class, 'companyIntro', null],
         'createdAt' => [parent::class, 'createdAt', null],
         'expertOpinion' => [parent::class, 'expertOpinion', null],

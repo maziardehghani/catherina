@@ -17,6 +17,7 @@ class ExpertResources extends JsonResource
         return [
             'id' => $this->getId(),
             'user_name' => $this->getUserName(),
+            'avatar' => $this->getMedia('avatar')?->getUrl(),
         ];
     }
 }

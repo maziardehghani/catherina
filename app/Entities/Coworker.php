@@ -2,15 +2,10 @@
 
 namespace App\Entities;
 
-
-use App\Enums\ContractTypes;
-use App\Enums\DocumentTypes;
 use App\Traits\HasStatus;
 use App\Traits\HasTimeStamp;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 
 

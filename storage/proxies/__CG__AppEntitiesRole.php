@@ -27,11 +27,13 @@ class Role extends \App\Entities\Role implements \Doctrine\ORM\Proxy\InternalPro
         "\0".parent::class."\0".'name' => [parent::class, 'name', null],
         "\0".parent::class."\0".'permissions' => [parent::class, 'permissions', null],
         "\0".parent::class."\0".'updatedAt' => [parent::class, 'updatedAt', null],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
         'createdAt' => [parent::class, 'createdAt', null],
         'id' => [parent::class, 'id', null],
         'name' => [parent::class, 'name', null],
         'permissions' => [parent::class, 'permissions', null],
         'updatedAt' => [parent::class, 'updatedAt', null],
+        'user' => [parent::class, 'user', null],
     ];
 
     public function __isInitialized(): bool

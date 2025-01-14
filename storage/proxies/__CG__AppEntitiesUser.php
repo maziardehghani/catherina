@@ -36,10 +36,8 @@ class User extends \App\Entities\User implements \Doctrine\ORM\Proxy\InternalPro
         "\0".parent::class."\0".'password' => [parent::class, 'password', null],
         "\0".parent::class."\0".'roles' => [parent::class, 'roles', null],
         "\0".parent::class."\0".'status' => [parent::class, 'status', null],
-        "\0".parent::class."\0".'status_id' => [parent::class, 'status_id', null],
         "\0".parent::class."\0".'type' => [parent::class, 'type', null],
         "\0".parent::class."\0".'updatedAt' => [parent::class, 'updatedAt', null],
-        "\0".parent::class."\0".'username' => [parent::class, 'username', null],
         "\0".parent::class."\0".'usersInfosValues' => [parent::class, 'usersInfosValues', null],
         'bio' => [parent::class, 'bio', null],
         'createdAt' => [parent::class, 'createdAt', null],
@@ -55,10 +53,8 @@ class User extends \App\Entities\User implements \Doctrine\ORM\Proxy\InternalPro
         'password' => [parent::class, 'password', null],
         'roles' => [parent::class, 'roles', null],
         'status' => [parent::class, 'status', null],
-        'status_id' => [parent::class, 'status_id', null],
         'type' => [parent::class, 'type', null],
         'updatedAt' => [parent::class, 'updatedAt', null],
-        'username' => [parent::class, 'username', null],
         'usersInfosValues' => [parent::class, 'usersInfosValues', null],
     ];
 
