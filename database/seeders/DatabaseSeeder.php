@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Entities\Contract;
+use App\Entities\Protest;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +24,8 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             ContractSeeder::class,
             CoworkerSeeder::class,
-            ProjectUserExpertSeeder::class
+            ProjectUserExpertSeeder::class,
+            ProtestSeeder::class,
         ]);
     }
 }
